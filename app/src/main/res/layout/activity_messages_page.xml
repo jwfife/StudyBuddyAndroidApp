@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#214150"
+    tools:context=".MessagesPage">
+
+    <TextView
+        android:id="@+id/maintitle"
+        android:layout_width="189dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginRight="20dp"
+        android:fontFamily="sans-serif-condensed-light"
+        android:text="StudyBuddy"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.255"
+        app:layout_constraintStart_toEndOf="@+id/returnToPrev"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.551" />
+
+    <LinearLayout
+        android:layout_width="409dp"
+        android:layout_height="643dp"
+        android:background="#B9E6EFF3"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="98dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/womansmiling2"
+                android:layout_width="8dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                app:srcCompat="@mipmap/smilingwoman2" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_marginTop="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="41dp"
+                android:layout_weight="1"
+                android:text="Hey! Just wanted to follow up on that project..." />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="96dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/guysmiling"
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="1dp"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:scaleX="1.5"
+                android:scaleY="1.5"
+                app:srcCompat="@mipmap/guysmiling_foreground" />
+
+            <TextView
+                android:id="@+id/secondMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="49dp"
+                android:layout_weight="1"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="10dp"
+                android:text="I need some help studying for the exam. Are you free?" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="92dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="106dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:scaleX="1.5"
+                android:scaleY="1.5"
+                app:srcCompat="@mipmap/smilingwoman_foreground" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="341dp"
+                android:layout_height="49dp"
+                android:layout_marginTop="30dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="10dp"
+                android:text="Do you have Professor Smith? Not sure what to do about the homework..." />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="87dp" />
+
+    <ImageButton
+        android:id="@+id/returnToPrev"
+        android:layout_width="57dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="30dp"
+        android:background="#FF214150"
+        android:scaleX="1.9"
+        android:scaleY="1.9"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_revert" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:scaleType="centerCrop"
+        android:scaleX="1"
+        android:scaleY="1"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/app_logo_dark_blue_foreground" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

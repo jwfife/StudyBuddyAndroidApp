@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchForClasses">
+
+    <LinearLayout
+        android:layout_width="409dp"
+        android:layout_height="729dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="109dp"
+            android:background="#214150"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/backToSelection"
+                android:layout_width="57dp"
+                android:layout_height="55dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="60dp"
+                android:layout_weight="1"
+                android:background="#FF214150"
+                android:scaleX="1.9"
+                android:scaleY="1.9"
+                app:layout_constraintBottom_toTopOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/ic_menu_revert" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="254dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="30dp"
+                android:layout_weight="1"
+                android:fontFamily="serif"
+                android:text="Search For Classes"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="34sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <SearchView
+            android:layout_width="match_parent"
+            android:layout_height="42dp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="474dp"
+            android:background="#B9E6EFF3">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:id="@+id/CS101"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CS-101 | Basics of Computer Science" />
+
+                <CheckBox
+                    android:id="@+id/CS140"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CS-140 | Introduction to Programming" />
+
+                <CheckBox
+                    android:id="@+id/CS155"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CS-155 | Comp Networking and Security" />
+
+                <CheckBox
+                    android:id="@+id/CS225"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CS-225 | Discrete Structures I" />
+
+                <CheckBox
+                    android:id="@+id/CS242"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CS-242 | Data Structures" />
+
+                <CheckBox
+                    android:id="@+id/CS248"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CS-248 | Algorithm Analysis" />
+
+                <CheckBox
+                    android:id="@+id/CS254"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CS-254 | Computer Org and Architecture" />
+
+                <CheckBox
+                    android:id="@+id/CS282"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CS-282 | Unix Systems Programming" />
+
+                <CheckBox
+                    android:id="@+id/CS286"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CS-286 | Database Design and Applications" />
+
+                <CheckBox
+                    android:id="@+id/CS295"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CS-295 | Discrete Structures II" />
+
+                <CheckBox
+                    android:id="@+id/CS343"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CS-343 | Software Constr, Des and Archit" />
+
+                <CheckBox
+                    android:id="@+id/CS348"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CS-348 | Software Process Management" />
+
+                <CheckBox
+                    android:id="@+id/CS373"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CS-373 | Operating Systems" />
+
+                <CheckBox
+                    android:id="@+id/CS383"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CS-383 | Cloud, Parallel and Dist Comput" />
+
+                <CheckBox
+                    android:id="@+id/CS443"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CS-443 | Software Quality Assur and Test" />
+
+                <CheckBox
+                    android:id="@+id/CS448"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CS-448 | Software Dev Capstone" />
+
+                <CheckBox
+                    android:id="@+id/CS453"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CS-453 | Data Mining" />
+
+                <CheckBox
+                    android:id="@+id/CS483"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CS-483 | Big Data Analytics Capstone" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="215dp"
+            android:layout_height="65dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="18dp"
+            android:text="Find Study Groups!" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
