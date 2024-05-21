@@ -11,7 +11,7 @@ public class ActionSelection extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.action_selection);
 
         View backToMain = findViewById(R.id.backToMain);
         backToMain.setOnClickListener(
