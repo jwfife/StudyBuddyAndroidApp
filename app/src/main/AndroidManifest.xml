@@ -13,6 +13,13 @@
         android:theme="@style/Theme.FinalProject"
         tools:targetApi="31">
         <activity
+            android:name=".RegisterAccount"
+            android:exported="false" />
+        <activity
+            android:name=".ui.login.LoginOrRegister"
+            android:exported="false"
+            android:label="@string/title_activity_login_or_register" />
+        <activity
             android:name=".MessagesPage"
             android:exported="false" />
         <activity
