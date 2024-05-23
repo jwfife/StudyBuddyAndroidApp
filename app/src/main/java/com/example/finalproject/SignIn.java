@@ -23,5 +23,16 @@ public class SignIn extends AppCompatActivity {
                     }
                 }
         );
+
+        View signUp = findViewById(R.id.sign_up_register);
+        signUp.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(SignIn.this, RegisterAccount.class);
+                        startActivity(i);
+                    }
+                }
+        );
     }
 }
