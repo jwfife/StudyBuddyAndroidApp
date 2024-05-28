@@ -8,7 +8,7 @@
     tools:context=".MessagesPage">
 
     <TextView
-        android:id="@+id/maintitle"
+        android:id="@+id/main_title"
         android:layout_width="189dp"
         android:layout_height="58dp"
         android:layout_marginTop="35dp"

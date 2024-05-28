@@ -13,7 +13,7 @@ public class SignIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in);
 
-        View continueAsGuest = findViewById(R.id.continueasguest);
+        View continueAsGuest = findViewById(R.id.continue_as_guest);
         continueAsGuest.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
