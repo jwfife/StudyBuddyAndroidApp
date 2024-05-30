@@ -1,5 +1,6 @@
-package com.example.studybuddy;
+package com.example.finalproject;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.widget.Button;
