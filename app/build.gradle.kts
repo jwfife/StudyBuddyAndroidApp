@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.finalproject"
+    namespace = "com.example.studybuddy"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.finalproject"
+        applicationId = "com.example.studybuddy"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
