@@ -18,7 +18,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase MyDB) {
-        MyDB.execSQL("create Table users (email TEXT primary key, password TEXT, firstname TEXT, lastname TEXT, age INT)");
+        MyDB.execSQL("create Table users (email TEXT primary key, password TEXT, firstname TEXT, lastname TEXT)");
     }
 
     @Override
@@ -26,35 +26,31 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         MyDB.execSQL("drop Table if exists users");
     }
 
-    public Boolean insertData(String email, String password, String firstname, String lastname, int age){
+    public Boolean insertData(String email, String password, String firstname, String lastname){
         SQLiteDatabase MyDB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("email", email);
         contentValues.put("password", password);
         contentValues.put("firstname", firstname);
         contentValues.put("lastname", lastname);
-        contentValues.put("age", age);
 
         long result = MyDB.insert("users", null, contentValues);
 
-        if (result == -1) {
-            return false;
-        }
-        else {
-            return true;
-        }
+        return result != -1;
     }
 
     public Boolean checkEmail(String email) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
         Cursor cursor = MyDB.rawQuery("Select * from users where email = ?", new String[] {email});
 
-        if (cursor.getCount() > 0){
-            return true;
-        }
-        else {
-            return false;
-        }
+        return cursor.getCount() > 0;
+
+    }
+
+    public Boolean checkEmailPassword(String email, String password) {
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        Cursor cursor = MyDB.rawQuery("Select * from users where email = ? and password = ?", new String[] {email, password});
+        return cursor.getCount() > 0;
     }
 }
 
