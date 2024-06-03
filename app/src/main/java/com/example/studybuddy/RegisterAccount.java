@@ -82,6 +82,16 @@ public class RegisterAccount extends AppCompatActivity {
             }
         });
 
+        View backToSignIn = findViewById(R.id.back_to_sign_in);
+        backToSignIn.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(RegisterAccount.this, SignIn.class);
+                        startActivity(i);
+                    }
+                }
+        );
 
     }
 
@@ -161,4 +171,5 @@ public class RegisterAccount extends AppCompatActivity {
     public void openBirthdatePicker(View view){
         birthdatePickerDialog.show();
     }
+
 }
