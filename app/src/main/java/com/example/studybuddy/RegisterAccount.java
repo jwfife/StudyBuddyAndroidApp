@@ -5,10 +5,13 @@ import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
+import android.text.method.SingleLineTransformationMethod;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +33,7 @@ public class RegisterAccount extends AppCompatActivity {
     EditText email, password, firstName, lastName;
     Button register;
     DatabaseHelper DB;
+    ImageView viewingEye;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +49,21 @@ public class RegisterAccount extends AppCompatActivity {
         lastName = findViewById(R.id.editLastName);
         register = findViewById(R.id.register);
         DB = new DatabaseHelper(this);
+        viewingEye = findViewById(R.id.view_password_eye);
 
+        viewingEye.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (password.getTransformationMethod().getClass().getSimpleName() .equals("PasswordTransformationMethod")) {
+                    password.setTransformationMethod(new SingleLineTransformationMethod());
+                }
+                else {
+                    password.setTransformationMethod(new PasswordTransformationMethod());
+                }
 
+                password.setSelection(password.getText().length());
+            }
+        });
 
         //not sure if this is right
         register.setOnClickListener(new View.OnClickListener() {
