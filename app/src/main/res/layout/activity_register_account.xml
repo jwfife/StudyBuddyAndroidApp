@@ -110,6 +110,141 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editEmailAddress" />
 
+        <LinearLayout
+            android:id="@+id/first_req"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/editPassword"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            >
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:cardBackgroundColor="#dcdcdc"
+                app:cardCornerRadius="25dp"
+                android:layout_gravity="center">
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/character_requirement"
+                android:layout_width="343dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:gravity="center|start"
+                android:text="At least 8 characters"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/second_requirement"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/first_req"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            >
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginStart="5dp"
+                android:id="@+id/card2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                app:cardBackgroundColor="#dcdcdc"
+                app:cardCornerRadius="25dp">
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/num_req"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:gravity="center|start"
+                android:text="At least 1 number"
+                android:textColor="@android:color/black" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginStart="10dp"
+            android:id="@+id/third_requirement"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/second_requirement"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+            <androidx.cardview.widget.CardView
+                android:layout_marginStart="5dp"
+                android:id="@+id/card3"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:cardBackgroundColor="#dcdcdc"
+                app:cardCornerRadius="25dp"
+                android:layout_gravity="center">
+
+            </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/uppercase_req"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@android:color/black"
+                android:text="At least 1 uppercase letter"
+                android:gravity="center|start"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginStart="10dp"
+            android:id="@+id/fourth_requirement"
+            app:layout_constraintTop_toBottomOf="@id/third_requirement"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <androidx.cardview.widget.CardView
+                android:layout_marginStart="5dp"
+                android:id="@+id/card4"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:cardBackgroundColor="#dcdcdc"
+                app:cardCornerRadius="25dp"
+                android:layout_gravity="center">
+
+            </androidx.cardview.widget.CardView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@android:color/black"
+                android:text="At least 1 special symbol"
+                android:gravity="center|start"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"/>
+        </LinearLayout>
+
+
         <AutoCompleteTextView
             android:id="@+id/autocomplete_school"
             android:layout_width="wrap_content"
@@ -124,47 +259,19 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editFirstName" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/date_of_birth"
-            android:text="@string/register_enter_dob"
-            android:textSize="18sp"
-            app:layout_constraintTop_toBottomOf="@id/editPassword"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="30dp"
-        />
-
-        <Button
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:text="@string/register_calendar_button_date"
-            android:textSize="18sp"
-            android:textColor="@color/black"
-            style="@android:style/Widget.DeviceDefault.Light.Spinner"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/date_of_birth"
-            android:layout_marginTop="20dp"
-            android:id="@+id/editDateOfBirth"
-            android:onClick="openBirthdatePicker"
-            />
-
         <Button
             android:id="@+id/register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/myBlue"
             android:text="@string/register_register_button"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:typeface="normal"
-            android:backgroundTint="@color/myBlue"
-            app:layout_constraintTop_toBottomOf="@id/editDateOfBirth"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="35dp"
-            />
+            app:layout_constraintTop_toBottomOf="@id/fourth_requirement"
+            tools:layout_editor_absoluteY="542dp" />
 
         <TextView
             android:id="@+id/already_have_account"
@@ -201,14 +308,12 @@
             android:id="@+id/view_password_eye"
             android:layout_width="58dp"
             android:layout_height="53dp"
-            app:srcCompat="@android:drawable/ic_menu_view"
-            tools:layout_editor_absoluteX="310dp"
-            tools:layout_editor_absoluteY="332dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintLeft_toRightOf="@id/editPassword"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editEmailAddress"
-            app:layout_constraintBottom_toTopOf="@id/date_of_birth"
-            android:layout_marginEnd="30dp"/>
+            app:srcCompat="@android:drawable/ic_menu_view" />
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

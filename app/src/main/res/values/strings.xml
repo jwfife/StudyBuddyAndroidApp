@@ -71,5 +71,6 @@
     <string name="register_register_button">Register</string>
     <string name="already_have_account">Already have an account?</string>
     <string name="going_back_to_sign_in">Sign in.</string>
+    <string name="editNameHint">Firstname Lastname</string>
 
 </resources>
