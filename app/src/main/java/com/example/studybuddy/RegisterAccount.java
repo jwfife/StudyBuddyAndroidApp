@@ -1,11 +1,15 @@
 package com.example.studybuddy;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.text.method.SingleLineTransformationMethod;
 import android.widget.Button;
@@ -16,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import java.sql.Date;
 import java.util.Calendar;
@@ -36,6 +41,8 @@ public class RegisterAccount extends AppCompatActivity {
     Button register;
     DatabaseHelper DB;
     ImageView viewingEye;
+    CardView card1, card2, card3, card4;
+    private boolean is8char, hasNum, hasUpper, hasSpecialSymbol;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,19 +120,18 @@ public class RegisterAccount extends AppCompatActivity {
                 }
         );
 
+        inputChanged();
     }
 
+
     public Boolean passwordValidate(){
-        boolean is8char;
-        boolean hasNum;
-        boolean hasUpper;
-        boolean hasSpecialSymbol;
+
         String passwordStr = password.getText().toString();
 
         // 8 character
         if (password.length()>= 8) {
             is8char = true;
-            //card1.setCardBackgroundColor(Color.parseColor(getString(R.color.colorAccent)));
+            card1.setCardBackgroundColor(Color.parseColor(String.valueOf((R.color.myBlue))));
         }
         else {
             is8char = false;
@@ -177,7 +183,30 @@ public class RegisterAccount extends AppCompatActivity {
         if (!is8char || !hasNum || !hasUpper || !hasSpecialSymbol) {
             return false;
         }
+
         return true;
+    }
+
+    private  void inputChanged(){
+        password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @SuppressLint("ResourceType")
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                passwordValidate();
+                if(is8char && hasNum && hasSpecialSymbol && hasUpper)
+                {
+                    //cardButtonSignUp.setCardBackgroundColor(Color.parseColor(getString(R.color.colorPrimary)));
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+//
+        });
+//
     }
 
 }

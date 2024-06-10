@@ -125,6 +125,7 @@
             >
 
             <androidx.cardview.widget.CardView
+                android:layout_marginStart="5dp"
                 android:id="@+id/card1"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -132,13 +133,21 @@
                 app:cardCornerRadius="25dp"
                 android:layout_gravity="center">
 
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@mipmap/checkmark_foreground"
+                    />
+
             </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/character_requirement"
-                android:layout_width="343dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:gravity="center|start"
                 android:text="At least 8 characters"
                 android:textColor="@android:color/black" />
@@ -241,7 +250,8 @@
                 android:text="At least 1 special symbol"
                 android:gravity="center|start"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"/>
+                android:layout_marginEnd="10dp"
+                />
         </LinearLayout>
 
 
@@ -268,6 +278,7 @@
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:typeface="normal"
+            android:layout_marginTop="5dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fourth_requirement"
@@ -292,7 +303,7 @@
             android:id="@+id/back_to_sign_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="22dp"
             android:layout_marginEnd="90dp"
             android:height="48dp"
             android:clickable="true"
