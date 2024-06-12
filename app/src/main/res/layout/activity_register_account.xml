@@ -176,6 +176,13 @@
                 app:cardBackgroundColor="#dcdcdc"
                 app:cardCornerRadius="25dp">
 
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@mipmap/checkmark_foreground"
+                    />
+
             </androidx.cardview.widget.CardView>
 
             <TextView
@@ -210,6 +217,12 @@
                 app:cardCornerRadius="25dp"
                 android:layout_gravity="center">
 
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@mipmap/checkmark_foreground"
+                    />
             </androidx.cardview.widget.CardView>
             <TextView
                 android:id="@+id/uppercase_req"
@@ -233,6 +246,7 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:orientation="horizontal">
+
             <androidx.cardview.widget.CardView
                 android:layout_marginStart="5dp"
                 android:id="@+id/card4"
@@ -241,6 +255,13 @@
                 app:cardBackgroundColor="#dcdcdc"
                 app:cardCornerRadius="25dp"
                 android:layout_gravity="center">
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@mipmap/checkmark_foreground"
+                    />
 
             </androidx.cardview.widget.CardView>
             <TextView

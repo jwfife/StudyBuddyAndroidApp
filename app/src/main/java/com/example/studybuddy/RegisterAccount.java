@@ -33,8 +33,6 @@ public class RegisterAccount extends AppCompatActivity {
     (https://public.opendatasoft.com/explore/dataset/us-colleges-and-universities/table/?flg=en-us
     might work)
     - use that database as an option for a drop down menu when registering for an account
-    - remove birthday selection from registration screen (maybe move to edit profile) and
-    add password requirement checklist for user (remove toast messages afterwards)
      */
 
     EditText email, password, firstName, lastName;
@@ -42,8 +40,9 @@ public class RegisterAccount extends AppCompatActivity {
     DatabaseHelper DB;
     ImageView viewingEye;
     CardView card1, card2, card3, card4;
-    private boolean is8char, hasNum, hasUpper, hasSpecialSymbol;
+    private boolean is8char = false, hasNum = false, hasUpper = false, hasSpecialSymbol = false;
 
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +55,11 @@ public class RegisterAccount extends AppCompatActivity {
         register = findViewById(R.id.register);
         DB = new DatabaseHelper(this);
         viewingEye = findViewById(R.id.view_password_eye);
+        card1 = findViewById(R.id.card1);
+        card2 = findViewById(R.id.card2);
+        card3 = findViewById(R.id.card3);
+        card4 = findViewById(R.id.card4);
+        register.setBackgroundColor(Color.parseColor(getString(R.color.myGrey)));
 
         viewingEye.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,10 +84,10 @@ public class RegisterAccount extends AppCompatActivity {
                 String userLastName = lastName.getText().toString();
                 //Date birthDate = (Date) birthdateButton.getText();
 
-                if (!passwordValidate()) {
+              /*  if (!passwordValidate()) {
                     Toast.makeText(RegisterAccount.this, "Please enter all fields correctly.", Toast.LENGTH_SHORT).show();
                 }
-                else {
+                else { */
                     if (user_email.isEmpty() || user_pass.isEmpty()){
                         Toast.makeText(RegisterAccount.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
                     }
@@ -106,7 +110,7 @@ public class RegisterAccount extends AppCompatActivity {
                         }
                 }
                 }
-            }
+
         });
 
         View backToSignIn = findViewById(R.id.back_to_sign_in);
@@ -123,7 +127,7 @@ public class RegisterAccount extends AppCompatActivity {
         inputChanged();
     }
 
-
+    @SuppressLint("ResourceType")
     public Boolean passwordValidate(){
 
         String passwordStr = password.getText().toString();
@@ -131,76 +135,74 @@ public class RegisterAccount extends AppCompatActivity {
         // 8 character
         if (password.length()>= 8) {
             is8char = true;
-            card1.setCardBackgroundColor(Color.parseColor(String.valueOf((R.color.myBlue))));
+            card1.setCardBackgroundColor(Color.parseColor(getString((R.color.myBlue))));
         }
         else {
             is8char = false;
-            Toast.makeText(RegisterAccount.this, "Password must be at least 8 characters long.", Toast.LENGTH_SHORT).show();
-            //card1.setCardBackgroundColor(Color.parseColor(getString(R.color.colorGrey)));
+            //Toast.makeText(RegisterAccount.this, "Password must be at least 8 characters long.", Toast.LENGTH_SHORT).show();
+            card1.setCardBackgroundColor(Color.parseColor(getString(R.color.myGrey)));
         }
-
 
 
         //number!
         if (passwordStr.matches("(.*[0-9].*)")) {
             hasNum = true;
-           //card2.setCardBackgroundColor(Color.parseColor(getString(R.color.colorAccent)));
+            card2.setCardBackgroundColor(Color.parseColor(getString(R.color.myBlue)));
         }
         else {
             hasNum = false;
-            Toast.makeText(RegisterAccount.this, "Password must have at least 1 number.", Toast.LENGTH_SHORT).show();
-           //card2.setCardBackgroundColor(Color.parseColor(getString(R.color.colorGrey)));
+            //Toast.makeText(RegisterAccount.this, "Password must have at least 1 number.", Toast.LENGTH_SHORT).show();
+            card2.setCardBackgroundColor(Color.parseColor(getString(R.color.myGrey)));
         }
-
 
 
         //upper case
         if (passwordStr.matches("(.*[A-Z].*)")) {
             hasUpper = true;
-            //card3.setCardBackgroundColor(Color.parseColor(getString(R.color.colorAccent)));
+            card3.setCardBackgroundColor(Color.parseColor(getString(R.color.myBlue)));
         }
         else {
             hasUpper = false;
-            Toast.makeText(RegisterAccount.this, "Password must have at least 1 upper case letter.", Toast.LENGTH_SHORT).show();
-            //card3.setCardBackgroundColor(Color.parseColor(getString(R.color.colorGrey)));
+            //Toast.makeText(RegisterAccount.this, "Password must have at least 1 upper case letter.", Toast.LENGTH_SHORT).show();
+           card3.setCardBackgroundColor(Color.parseColor(getString(R.color.myGrey)));
         }
-
 
 
         //symbol
         if (passwordStr.matches("^(?=.*[_.()$&@]).*$")) {
             hasSpecialSymbol = true;
-            //card4.setCardBackgroundColor(Color.parseColor(getString(R.color.colorAccent)));
+            card4.setCardBackgroundColor(Color.parseColor(getString(R.color.myBlue)));
         }
         else {
             hasSpecialSymbol = false;
-            Toast.makeText(RegisterAccount.this, "Password must contain at least 1 special character.", Toast.LENGTH_SHORT).show();
-            //card4.setCardBackgroundColor(Color.parseColor(getString(R.color.colorGrey)));
+            //Toast.makeText(RegisterAccount.this, "Password must contain at least 1 special character.", Toast.LENGTH_SHORT).show();
+            card4.setCardBackgroundColor(Color.parseColor(getString(R.color.myGrey)));
         }
 
 
-        //if any do not meet requirements
-        if (!is8char || !hasNum || !hasUpper || !hasSpecialSymbol) {
-            return false;
-        }
+        return is8char && hasNum && hasUpper && hasSpecialSymbol;
 
-        return true;
+
     }
 
-    private  void inputChanged(){
+    @SuppressLint("ResourceType")
+    private void inputChanged(){
         password.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
-            @SuppressLint("ResourceType")
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 passwordValidate();
-                if(is8char && hasNum && hasSpecialSymbol && hasUpper)
-                {
-                    //cardButtonSignUp.setCardBackgroundColor(Color.parseColor(getString(R.color.colorPrimary)));
+                if (passwordValidate()) {
+                    register.setBackgroundColor(Color.parseColor(getString(R.color.myBlue)));
+                }
+                else {
+                    register.setBackgroundColor(Color.parseColor(getString(R.color.myGrey)));
                 }
             }
+
             @Override
             public void afterTextChanged(Editable s) {
             }
