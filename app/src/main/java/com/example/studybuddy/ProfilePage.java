@@ -1,7 +1,6 @@
 package com.example.studybuddy;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +16,7 @@ public class ProfilePage extends AppCompatActivity {
 
     TextView yourName;
     EditText inputText;
+    DatabaseHelper DB;
     private DatePickerDialog birthdatePickerDialog;
     private Button birthdateButton;
 
@@ -26,28 +26,18 @@ public class ProfilePage extends AppCompatActivity {
         setContentView(R.layout.profile_view);
         initDatePicker();
         birthdateButton = findViewById(R.id.editDateOfBirth);
-        birthdateButton.setText(getTodaysDate());
-
-        View backToSelectionPage = findViewById(R.id.returnToSelection);
-        backToSelectionPage.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = new Intent(ProfilePage.this, ActionSelection.class);
-                        startActivity(i);
-                    }
-                }
-        );
+        birthdateButton.setText(getTodayDate());
 
         yourName = (TextView) findViewById(R.id.yourName);
         inputText = (EditText) findViewById(R.id.inputYourName);
+        DB = new DatabaseHelper(this);
     }
 
     public void updateText(View view){
         yourName.setText(inputText.getText());
     }
 
-    private String getTodaysDate() {
+    private String getTodayDate() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);

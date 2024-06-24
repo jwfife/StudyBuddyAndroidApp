@@ -13,7 +13,7 @@ public class ActionSelection extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.action_selection);
 
-        View backToMain = findViewById(R.id.backToMain);
+        /* View backToMain = findViewById(R.id.backToMain);
         backToMain.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -21,8 +21,8 @@ public class ActionSelection extends AppCompatActivity {
                         Intent i = new Intent(ActionSelection.this, SignIn.class);
                         startActivity(i);
                     }
-                }
-        );
+                }test
+        ); */
 
         View searchForClasses = findViewById(R.id.searchForClasses);
         searchForClasses.setOnClickListener(

@@ -52,5 +52,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         Cursor cursor = MyDB.rawQuery("Select * from users where email = ? and password = ?", new String[] {email, password});
         return cursor.getCount() > 0;
     }
+
 }
 

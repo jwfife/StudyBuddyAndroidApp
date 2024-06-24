@@ -137,8 +137,7 @@
                     android:layout_gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@mipmap/checkmark_foreground"
-                    />
+                    android:background="@mipmap/checkmark_foreground" />
 
             </androidx.cardview.widget.CardView>
 

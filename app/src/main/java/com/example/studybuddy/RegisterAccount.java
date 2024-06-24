@@ -1,11 +1,7 @@
 package com.example.studybuddy;
 
 import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
-import android.app.Notification;
-import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,17 +9,12 @@ import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.text.method.SingleLineTransformationMethod;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-
-import java.sql.Date;
-import java.util.Calendar;
 
 public class RegisterAccount extends AppCompatActivity {
 
@@ -40,7 +31,6 @@ public class RegisterAccount extends AppCompatActivity {
     DatabaseHelper DB;
     ImageView viewingEye;
     CardView card1, card2, card3, card4;
-    private boolean is8char = false, hasNum = false, hasUpper = false, hasSpecialSymbol = false;
 
     @SuppressLint("ResourceType")
     @Override
@@ -133,48 +123,48 @@ public class RegisterAccount extends AppCompatActivity {
         String passwordStr = password.getText().toString();
 
         // 8 character
+        boolean is8char = false;
         if (password.length()>= 8) {
             is8char = true;
             card1.setCardBackgroundColor(Color.parseColor(getString((R.color.myBlue))));
         }
         else {
-            is8char = false;
             //Toast.makeText(RegisterAccount.this, "Password must be at least 8 characters long.", Toast.LENGTH_SHORT).show();
             card1.setCardBackgroundColor(Color.parseColor(getString(R.color.myGrey)));
         }
 
 
         //number!
+        boolean hasNum = false;
         if (passwordStr.matches("(.*[0-9].*)")) {
             hasNum = true;
             card2.setCardBackgroundColor(Color.parseColor(getString(R.color.myBlue)));
         }
         else {
-            hasNum = false;
             //Toast.makeText(RegisterAccount.this, "Password must have at least 1 number.", Toast.LENGTH_SHORT).show();
             card2.setCardBackgroundColor(Color.parseColor(getString(R.color.myGrey)));
         }
 
 
         //upper case
+        boolean hasUpper = false;
         if (passwordStr.matches("(.*[A-Z].*)")) {
             hasUpper = true;
             card3.setCardBackgroundColor(Color.parseColor(getString(R.color.myBlue)));
         }
         else {
-            hasUpper = false;
             //Toast.makeText(RegisterAccount.this, "Password must have at least 1 upper case letter.", Toast.LENGTH_SHORT).show();
            card3.setCardBackgroundColor(Color.parseColor(getString(R.color.myGrey)));
         }
 
 
         //symbol
+        boolean hasSpecialSymbol = false;
         if (passwordStr.matches("^(?=.*[_.()$&@]).*$")) {
             hasSpecialSymbol = true;
             card4.setCardBackgroundColor(Color.parseColor(getString(R.color.myBlue)));
         }
         else {
-            hasSpecialSymbol = false;
             //Toast.makeText(RegisterAccount.this, "Password must contain at least 1 special character.", Toast.LENGTH_SHORT).show();
             card4.setCardBackgroundColor(Color.parseColor(getString(R.color.myGrey)));
         }
