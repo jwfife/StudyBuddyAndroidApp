@@ -55,10 +55,6 @@
 
 
 
-
-
-
-
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -185,5 +181,6 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="title_activity_maps">MapsActivity</string>
 
 </resources>

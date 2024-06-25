@@ -53,5 +53,16 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return cursor.getCount() > 0;
     }
 
+
+    //method to write 1 (true) or 0 (false) into the currentuser column of the database
+    //TO-DO: not sure how to insert into the correct record of the current user
+    public void setCurrentUser(Integer truthValue){
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("currentuser", truthValue);
+
+        long result = MyDB.insert("users", null, contentValues);
+    }
+
 }
 

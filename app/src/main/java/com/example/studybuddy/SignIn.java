@@ -12,6 +12,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+
+
+
+
+/* TODO:
+    - Add forgot password option
+ */
 public class SignIn extends AppCompatActivity {
 
     EditText email, password;
@@ -58,6 +65,7 @@ public class SignIn extends AppCompatActivity {
                     if (checkEmailAndPassword) {
                         Toast.makeText(SignIn.this, "Sign in successful", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), ActionSelection.class);
+
                         startActivity(intent);
                     }
                     else {

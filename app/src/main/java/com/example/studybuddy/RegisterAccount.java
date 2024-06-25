@@ -72,12 +72,7 @@ public class RegisterAccount extends AppCompatActivity {
                 String user_pass = password.getText().toString();
                 String userFirstName = firstName.getText().toString();
                 String userLastName = lastName.getText().toString();
-                //Date birthDate = (Date) birthdateButton.getText();
 
-              /*  if (!passwordValidate()) {
-                    Toast.makeText(RegisterAccount.this, "Please enter all fields correctly.", Toast.LENGTH_SHORT).show();
-                }
-                else { */
                     if (user_email.isEmpty() || user_pass.isEmpty()){
                         Toast.makeText(RegisterAccount.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
                     }
