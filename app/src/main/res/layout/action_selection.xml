@@ -42,7 +42,7 @@
             android:layout_width="123dp"
             android:layout_height="120dp"
             android:layout_marginStart="150dp"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="50dp"
             android:layout_marginEnd="155dp"
             android:background="@color/myBlue"
             app:srcCompat="@mipmap/book_icon_foreground" />
@@ -66,6 +66,16 @@
             android:layout_marginEnd="155dp"
             android:background="@color/myBlue"
             app:srcCompat="@mipmap/messages_icon_foreground" />
+
+        <ImageButton
+            android:id="@+id/groupMap"
+            android:layout_width="123dp"
+            android:layout_height="124dp"
+            android:layout_marginStart="150dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="155dp"
+            android:background="@color/myBlue"
+            app:srcCompat="@mipmap/map_icon_white_foreground" />
 
 
     </LinearLayout>
