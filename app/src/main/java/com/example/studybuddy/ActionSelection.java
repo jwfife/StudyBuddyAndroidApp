@@ -56,5 +56,16 @@ public class ActionSelection extends AppCompatActivity {
                     }
                 }
         );
+
+        View goToMap = findViewById(R.id.groupMap);
+        goToMap.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(ActionSelection.this, MapsActivity.class);
+                        startActivity(i);
+                    }
+                }
+        );
     }
 }

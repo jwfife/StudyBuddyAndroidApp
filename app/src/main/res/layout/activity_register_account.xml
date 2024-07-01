@@ -55,13 +55,14 @@
             android:id="@+id/editFirstName"
             android:layout_width="169dp"
             android:layout_height="48dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="136dp"
             android:autofillHints=""
             android:ems="10"
             android:hint="@string/register_hint_firstname"
             android:inputType="text"
             android:textColorHint="#757575"
+            app:layout_constraintEnd_toStartOf="@id/editLastName"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -69,31 +70,35 @@
             android:id="@+id/editLastName"
             android:layout_width="169dp"
             android:layout_height="48dp"
-            android:layout_marginTop="100dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginTop="136dp"
+            android:layout_marginEnd="28dp"
             android:autofillHints=""
             android:ems="10"
             android:hint="@string/register_hint_lastname"
             android:inputType="text"
             android:textColorHint="#757575"
+            app:layout_constraintStart_toEndOf="@id/editFirstName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
 
         <EditText
             android:id="@+id/editEmailAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:autofillHints=""
             android:ems="10"
             android:hint="@string/register_hint_email"
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
             android:textColorHint="#757575"
+            android:layout_marginTop="20sp"
+            app:layout_constraintHorizontal_bias="0.507"
+            app:layout_constraintTop_toBottomOf="@id/editFirstName"
+            app:layout_constraintBottom_toTopOf="@id/editPassword"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/autocomplete_school" />
-
+            tools:layout_editor_absoluteY="211dp" />
 
         <EditText
             android:id="@+id/editPassword"
@@ -105,6 +110,7 @@
             android:inputType="textPassword"
             android:minHeight="48dp"
             android:textColorHint="#757575"
+            android:layout_marginBottom="20sp"
             app:layout_constraintHorizontal_bias="0.507"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -275,20 +281,6 @@
         </LinearLayout>
 
 
-        <AutoCompleteTextView
-            android:id="@+id/autocomplete_school"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:ems="10"
-            android:hint="@string/register_hint_school"
-            android:inputType="text"
-            android:minHeight="48dp"
-            android:textColorHint="#757575"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editFirstName" />
-
         <Button
             android:id="@+id/register"
             android:layout_width="wrap_content"
@@ -298,7 +290,7 @@
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:typeface="normal"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fourth_requirement"
