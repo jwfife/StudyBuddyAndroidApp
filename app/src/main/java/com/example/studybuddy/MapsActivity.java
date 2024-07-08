@@ -41,9 +41,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
 
+        float zoomLevel = 18;
         // Add a marker in Sydney and move the camera
         LatLng worcesterStateUni = new LatLng(42.2681, -71.8443);
         googleMap.addMarker(new MarkerOptions().position(worcesterStateUni).title("Marker at Worcester State University"));
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(worcesterStateUni));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(worcesterStateUni, zoomLevel));
     }
 }
