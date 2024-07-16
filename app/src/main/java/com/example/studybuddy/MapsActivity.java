@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.databinding.tool.util.L;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -21,6 +22,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.studybuddy.databinding.ActivityMapsBinding;
 
@@ -99,6 +101,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    /*
+    NOTE: getLastLocation only updates the marker on the map interface after google maps
+    is opened on the users device.
+     */
+
     private void getLastLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, FINE_PERMISSION_CODE);
@@ -132,12 +139,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(@NonNull GoogleMap myMap) {
 
-        float zoomLevel = 18;
+        float zoomLevel = 17;
         if (currentLocation!= null) {
             //System.out.println(currentLocation);
             LatLng currLocation = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
             myMap.addMarker(new MarkerOptions().position(currLocation).title("My Location"));
+            myMap.moveCamera(CameraUpdateFactory.newLatLng(currLocation));
+            myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currLocation, zoomLevel));
         }
+
+        LatLng wsuLibrary = new LatLng(42.26691278324695, -71.84326764564923);
+        myMap.addMarker(new MarkerOptions().position(wsuLibrary).title("Study Group 1: Learning Resources Center/Library"));
+
+        LatLng wsuSullivanCenter = new LatLng(42.26784964308041, -71.84206601596094);
+        myMap.addMarker(new MarkerOptions().position(wsuSullivanCenter).title("Study Group 2: Sullivan Academic Center"));
+
+        LatLng wsuWellnessCenter = new LatLng(42.269366056194755, -71.84410449468824);
+        myMap.addMarker(new MarkerOptions().position(wsuWellnessCenter).title("Study Group 3: Wellness Center"));
+
+        LatLng wsuScienceTechCenter = new LatLng(42.27014916593119, -71.84345668449474);
+        myMap.addMarker(new MarkerOptions().position(wsuScienceTechCenter).title("Study Group 4: Ghosh Science & Tech Center"));
+
+        LatLng wsuSheehanHall = new LatLng(42.267168451252104, -71.84478947785838);
+        myMap.addMarker(new MarkerOptions().position(wsuSheehanHall).title("Study Group 5: Sheehan Hall"));
+
+
 
         // Add a marker in Worcester State and move the camera
         //LatLng worcesterStateUni = new LatLng(42.2681, -71.8443);
