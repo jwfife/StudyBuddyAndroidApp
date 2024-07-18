@@ -177,5 +177,12 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="search_classes_title">Search for Courses</string>
+    <string name="search_classes_description">Find courses you\'re currently taking or have already
+    taken. Ask to join a Study Group, or create your own!</string>
+    <string name="view_group_map">View the map to find places to study on campus!</string>
+    <string name="action_page_tutorial_text">Welcome to StudyBuddy! Here you can find courses, view
+        the map, and use navigation bar to see messages, return back to this home page, or
+    to view your profile. Happy studying!</string>
 
 </resources>

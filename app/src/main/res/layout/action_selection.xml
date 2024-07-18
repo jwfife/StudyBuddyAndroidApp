@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/myBlue"
+    android:background="@drawable/sign_in_gradient"
     tools:context=".ActionSelection">
 
     <TextView
@@ -21,7 +21,7 @@
         android:textColor="#FFFFFF"
         android:textSize="36sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintBottom_toTopOf="@+id/linear_parent_vert"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.549"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,62 +29,163 @@
         app:layout_constraintVertical_bias="0.458" />
 
     <LinearLayout
+        android:id="@+id/linear_parent_vert"
         android:layout_width="409dp"
         android:layout_height="643dp"
-        android:background="#B9E6EFF3"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <ImageButton
-            android:id="@+id/searchForClasses"
-            android:layout_width="123dp"
-            android:layout_height="120dp"
-            android:layout_marginStart="150dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="155dp"
-            android:background="@color/myBlue"
-            app:srcCompat="@mipmap/book_icon_foreground" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:textAlignment="center"
+            android:text="@string/action_page_tutorial_text"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
 
-        <ImageButton
-            android:id="@+id/viewProfileButton"
-            android:layout_width="125dp"
-            android:layout_height="124dp"
-            android:layout_marginStart="150dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="155dp"
-            android:background="@color/myBlue"
-            app:srcCompat="@mipmap/blank_avatar_icon_foreground" />
 
-        <ImageButton
-            android:id="@+id/messagesPage"
-            android:layout_width="123dp"
-            android:layout_height="124dp"
-            android:layout_marginStart="150dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="155dp"
-            android:background="@color/myBlue"
-            app:srcCompat="@mipmap/messages_icon_foreground" />
+        <LinearLayout
+            android:id="@+id/first_linear_horiz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="@id/linear_parent_vert"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-        <ImageButton
-            android:id="@+id/groupMap"
-            android:layout_width="123dp"
-            android:layout_height="124dp"
-            android:layout_marginStart="150dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="155dp"
-            android:background="@color/myBlue"
-            app:srcCompat="@mipmap/map_icon_white_foreground" />
+            <ImageButton
+                android:id="@+id/searchForClasses"
+                android:layout_width="123dp"
+                android:layout_height="120dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/rounded_corner"
+                app:srcCompat="@mipmap/book_icon_foreground" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="87dp"
+                android:text="@string/search_classes_title"
+                android:textColor="@color/white"
+                android:textStyle="italic|bold"
+                android:textSize="23sp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/second_linear_horiz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/first_linear_horiz"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageButton
+                android:id="@+id/groupMap"
+                android:scaleX="1"
+                android:scaleY="1"
+                android:layout_width="123dp"
+                android:layout_height="120dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/rounded_corner"
+                app:srcCompat="@mipmap/map_icon_white_foreground" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="20dp"
+                android:text="@string/view_group_map"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="italic|bold"
+                android:textSize="23sp"
+                />
+
+        </LinearLayout>
 
 
     </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
+        android:id="@+id/line_half"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="87dp" />
+        app:layout_constraintGuide_percent="0.84" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/white_background"
+        android:elevation="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@id/line_half">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="87dp" />
+
+        <LinearLayout
+            android:id="@+id/bottom_nav_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+
+            <ImageButton
+                android:id="@+id/messagesPage"
+                android:layout_width="80dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:background="@color/white"
+                app:srcCompat="@mipmap/messages_icon_foreground" />
+
+            <ImageButton
+                android:id="@+id/homePageButton"
+                android:layout_width="132dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/white"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/ic_home_black_24dp" />
+
+            <ImageButton
+                android:id="@+id/viewProfileButton"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="35dp"
+                android:background="@color/white"
+                app:srcCompat="@mipmap/profile_button_icon_foreground"/>
+
+
+        </LinearLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
