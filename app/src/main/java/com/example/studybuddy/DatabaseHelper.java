@@ -4,12 +4,16 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.*;
 
-import androidx.annotation.Nullable;
-import androidx.navigation.NavDestination;
+import java.sql.DriverManager;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DatabaseHelper extends  SQLiteOpenHelper {
 
     public static final String DBNAME = "Login.db";
+    private String currentUserFirstName;
 
     public DatabaseHelper(Context context) {
         super(context, "Login.db", null, 1);
@@ -45,6 +49,28 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
         return cursor.getCount() > 0;
 
+    }
+
+    public String getFirstName(String email) throws SQLException {
+
+        String url = "jdbc:sqlite:Login.db";
+        String sqlStatement = "SELECT firstname FROM users WHERE email = " + email;
+
+        try (Connection connection = DriverManager.getConnection(url);
+             Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(sqlStatement)) {
+
+            while (rs.next()) {
+                //String currentUserFirstName = "";
+                currentUserFirstName = rs.getString(1);
+                return currentUserFirstName;
+            }
+            
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        
+        return currentUserFirstName;
     }
 
     public Boolean checkEmailPassword(String email, String password) {

@@ -66,6 +66,8 @@ public class SignIn extends AppCompatActivity {
                         Toast.makeText(SignIn.this, "Sign in successful", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), ActionSelection.class);
 
+                        //passes the user's email through the intent to the next activity
+                        intent.putExtra("key", user_email);
                         startActivity(intent);
                     }
                     else {

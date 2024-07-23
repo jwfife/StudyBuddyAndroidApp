@@ -8,21 +8,21 @@ import android.view.View;
 
 public class ActionSelection extends AppCompatActivity {
 
+    String currentUserEmail ="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.action_selection);
 
-        /* View backToMain = findViewById(R.id.backToMain);
-        backToMain.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = new Intent(ActionSelection.this, SignIn.class);
-                        startActivity(i);
-                    }
-                }test
-        ); */
+
+        //retrieves the logged in user's email from the passed intent
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            currentUserEmail = extras.getString("key");
+        }
+
+
 
         View searchForClasses = findViewById(R.id.searchForClasses);
         searchForClasses.setOnClickListener(
@@ -36,11 +36,14 @@ public class ActionSelection extends AppCompatActivity {
         );
 
         View viewProfile = findViewById(R.id.viewProfileButton);
+        //String finalCurrentUserEmail = currentUserEmail;
         viewProfile.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent i = new Intent(ActionSelection.this, ProfilePage.class);
+                        //passes the user's email through the intent to the next activity
+                        i.putExtra("key", currentUserEmail);
                         startActivity(i);
                     }
                 }
