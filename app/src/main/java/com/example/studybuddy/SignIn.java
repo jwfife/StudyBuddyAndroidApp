@@ -1,6 +1,5 @@
 package com.example.studybuddy;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-
-
+import androidx.appcompat.app.AppCompatActivity;
 
 
 /* TODO:
@@ -31,9 +29,9 @@ public class SignIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in);
 
-        email = (EditText) findViewById(R.id.editEmailAddress);
-        password = (EditText) findViewById(R.id.editPassword);
-        btnLogin = (Button) findViewById(R.id.sign_in);
+        email = findViewById(R.id.editEmailAddress);
+        password = findViewById(R.id.editPassword);
+        btnLogin = findViewById(R.id.sign_in);
         DB = new DatabaseHelper(this);
         viewingEye = findViewById(R.id.view_password_eye);
 

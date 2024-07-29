@@ -2,17 +2,22 @@ package com.example.studybuddy;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+
 import android.database.sqlite.*;
 
+import java.io.File;
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DatabaseHelper extends  SQLiteOpenHelper {
+public class DatabaseHelper extends  SQLiteOpenHelper{
 
     public static final String DBNAME = "Login.db";
+
+    // Emulator Database Path = /data/data/com.example.studybuddy/databases/Login.db
+    // Local database path = "C:\Users\jwf12\OneDrive\Desktop\Databases\Login.db"
     private String currentUserFirstName;
 
     public DatabaseHelper(Context context) {
@@ -46,29 +51,17 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     public Boolean checkEmail(String email) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
         Cursor cursor = MyDB.rawQuery("Select * from users where email = ?", new String[] {email});
-
         return cursor.getCount() > 0;
+
 
     }
 
     public String getFirstName(String email) throws SQLException {
-
-        String url = "jdbc:sqlite:Login.db";
-        String sqlStatement = "SELECT firstname FROM users WHERE email = " + email;
-
-        try (Connection connection = DriverManager.getConnection(url);
-             Statement statement = connection.createStatement();
-             ResultSet rs = statement.executeQuery(sqlStatement)) {
-
-            while (rs.next()) {
-                //String currentUserFirstName = "";
-                currentUserFirstName = rs.getString(1);
-                return currentUserFirstName;
-            }
-            
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        Cursor cursor = MyDB.rawQuery("Select * from users where email = ?", new String[] {email});
+        cursor.moveToFirst();
+        int indexOfColumn = cursor.getColumnIndexOrThrow("firstname");
+        currentUserFirstName = cursor.getString(indexOfColumn);
         
         return currentUserFirstName;
     }

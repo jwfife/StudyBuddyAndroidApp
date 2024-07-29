@@ -25,6 +25,7 @@ public class ProfilePage extends AppCompatActivity {
         yourName = findViewById(R.id.yourName);
         DB = new DatabaseHelper(this);
 
+
         //retrieves the logged in user's email from the passed intent
         Bundle extras = getIntent().getExtras();
         String currentUserEmail = "";
@@ -34,7 +35,7 @@ public class ProfilePage extends AppCompatActivity {
 
         try {
             currentUserFirst = DB.getFirstName(currentUserEmail);
-            System.out.println(currentUserFirst);
+            yourName.setText(currentUserFirst);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -50,9 +51,4 @@ public class ProfilePage extends AppCompatActivity {
                 }
         );
     }
-
-    public void updateText(View view){
-        yourName.setText(currentUserFirst);
-    }
-
 }

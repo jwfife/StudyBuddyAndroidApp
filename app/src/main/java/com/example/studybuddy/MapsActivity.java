@@ -1,4 +1,4 @@
-   package com.example.studybuddy;
+package com.example.studybuddy;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
