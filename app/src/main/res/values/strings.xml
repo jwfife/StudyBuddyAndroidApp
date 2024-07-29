@@ -44,7 +44,8 @@
     <string name="profile_class_list">Courses</string>
     <string name="profile_following">Following: 0</string>
     <string name="profile_followers">Followers: 0</string>
-    <string name="profile_your_name">Your Name</string>
+    <string name="profile_first_name">First</string>
+    <string name="profile_last_name">Last</string>
     <string name="edit_profile_button">Edit Profile</string>
     <string name="action_settings">Settings</string>
     <string name="apply_button">Apply Changes</string>

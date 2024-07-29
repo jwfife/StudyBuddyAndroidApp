@@ -5,55 +5,38 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/sign_in_gradient"
     tools:context=".ProfilePage">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/myBlue"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:context=".ActionSelection">
-
-        <TextView
-            android:id="@+id/main_title"
-            android:layout_width="189dp"
-            android:layout_height="58dp"
-            android:fontFamily="sans-serif-condensed-light"
-            android:text="@string/main_title"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="36sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            app:layout_constraintBottom_toTopOf="@+id/guideline"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_bias="0.551" />
 
         <LinearLayout
             android:id="@+id/bottom_linear_layout"
             android:layout_width="409dp"
             android:layout_height="600dp"
-            android:background="#B9E6EFF3"
             android:orientation="vertical"
             android:layout_marginBottom="50sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
-                android:layout_marginTop="30sp"
-                android:layout_marginStart="50sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="125sp"
                     android:layout_height="125sp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="30sp"
+                    android:layout_marginTop="10sp"
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="100sp">
 
@@ -70,26 +53,34 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="10sp"
-                    android:orientation="vertical">
+                    android:layout_marginTop="15sp"
+                    android:orientation="horizontal"
+                    android:gravity="center">
 
                     <TextView
-                        android:id="@+id/yourName"
-                        android:layout_width="135dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10sp"
-                        android:layout_marginBottom="30sp"
-                        android:gravity="center"
-                        android:text="@string/profile_your_name"
-                        android:textSize="24sp" />
-
-                    <TextView
-                        android:id="@+id/profile_bio"
+                        android:id="@+id/firstName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20sp"
-                        android:layout_marginEnd="20sp"
-                        android:text="Your Bio Here" />
+                        android:layout_marginTop="20sp"
+                        android:layout_marginBottom="30sp"
+                        android:gravity="center"
+                        android:text="@string/profile_first_name"
+                        android:textSize="24sp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/lastName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20sp"
+                        android:layout_marginBottom="30sp"
+                        android:layout_marginStart="10sp"
+                        android:gravity="center"
+                        android:text="@string/profile_last_name"
+                        android:textSize="24sp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"/>
 
                 </LinearLayout>
 
@@ -107,7 +98,8 @@
                     android:layout_marginStart="70sp"
                     android:text="@string/profile_following"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@color/white"/>
 
                 <TextView
                     android:id="@+id/followers"
@@ -117,7 +109,8 @@
                     android:layout_marginStart="90sp"
                     android:layout_marginEnd="70sp"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@color/white"/>
 
             </LinearLayout>
 
@@ -127,7 +120,7 @@
                 android:layout_height="11sp"
                 android:layout_gravity="center"
                 android:layout_marginTop="30sp"
-                android:background="@color/myBlue" />
+                android:background="@color/white" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -135,12 +128,13 @@
                 android:layout_marginStart="30sp"
                 android:layout_marginTop="20sp"
                 android:text="@string/profile_class_list"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:textColor="@color/white"/>
 
             <ScrollView
                 android:id="@+id/scroll_through_courses"
                 android:layout_width="match_parent"
-                android:layout_height="274dp">
+                android:layout_height="223dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -163,12 +157,69 @@
             android:text="@string/edit_profile_button" />
 
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="87dp" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/white_background"
+            android:elevation="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scroll_through_courses"
+            tools:ignore="NotSibling">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="87dp" />
+
+            <LinearLayout
+                android:id="@+id/bottom_nav_bar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+
+                <ImageButton
+                    android:id="@+id/messagesPage"
+                    android:layout_width="80dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="35dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:background="@color/white"
+                    app:srcCompat="@mipmap/messages_icon_foreground" />
+
+                <ImageButton
+                    android:id="@+id/homePageButton"
+                    android:layout_width="132dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/ic_home_black_24dp" />
+
+                <ImageButton
+                    android:id="@+id/viewProfileButton"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="35dp"
+                    android:background="@color/white"
+                    app:srcCompat="@mipmap/profile_button_icon_foreground"/>
+
+
+            </LinearLayout>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,6 +19,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper{
     // Emulator Database Path = /data/data/com.example.studybuddy/databases/Login.db
     // Local database path = "C:\Users\jwf12\OneDrive\Desktop\Databases\Login.db"
     private String currentUserFirstName;
+    private String currentUserLastName;
 
     public DatabaseHelper(Context context) {
         super(context, "Login.db", null, 1);
@@ -64,6 +65,16 @@ public class DatabaseHelper extends  SQLiteOpenHelper{
         currentUserFirstName = cursor.getString(indexOfColumn);
         
         return currentUserFirstName;
+    }
+
+    public String getLastName(String email) throws SQLException {
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        Cursor cursor = MyDB.rawQuery("Select * from users where email = ?", new String[] {email});
+        cursor.moveToFirst();
+        int indexOfColumn = cursor.getColumnIndexOrThrow("lastname");
+        currentUserLastName = cursor.getString(indexOfColumn);
+
+        return currentUserLastName;
     }
 
     public Boolean checkEmailPassword(String email, String password) {
