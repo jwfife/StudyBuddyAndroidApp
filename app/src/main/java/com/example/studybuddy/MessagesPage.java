@@ -8,10 +8,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MessagesPage extends AppCompatActivity {
 
+    String currentUserEmail = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.messages_view);
+
+        //retrieves the logged in user's email from the passed intent
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            currentUserEmail = extras.getString("key");
+        }
 
         View backToSelection = findViewById(R.id.returnToPrev);
         backToSelection.setOnClickListener(
@@ -19,6 +26,7 @@ public class MessagesPage extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent i = new Intent(MessagesPage.this, ActionSelection.class);
+                        i.putExtra("key", currentUserEmail);
                         startActivity(i);
                     }
                 }

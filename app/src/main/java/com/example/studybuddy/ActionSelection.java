@@ -8,7 +8,7 @@ import android.view.View;
 
 public class ActionSelection extends AppCompatActivity {
 
-    String currentUserEmail ="";
+    String currentUserEmail = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +30,13 @@ public class ActionSelection extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent i = new Intent(ActionSelection.this, SearchForClasses.class);
+                        i.putExtra("key", currentUserEmail);
                         startActivity(i);
                     }
                 }
         );
 
         View viewProfile = findViewById(R.id.viewProfileButton);
-        //String finalCurrentUserEmail = currentUserEmail;
         viewProfile.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -55,6 +55,7 @@ public class ActionSelection extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent i = new Intent(ActionSelection.this, MessagesPage.class);
+                        i.putExtra("key", currentUserEmail);
                         startActivity(i);
                     }
                 }
@@ -66,6 +67,7 @@ public class ActionSelection extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent i = new Intent(ActionSelection.this, MapsActivity.class);
+                        i.putExtra("key", currentUserEmail);
                         startActivity(i);
                     }
                 }
