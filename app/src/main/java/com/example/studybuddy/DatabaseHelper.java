@@ -5,12 +5,9 @@ import android.database.Cursor;
 
 import android.database.sqlite.*;
 
-import java.io.File;
-import java.sql.DriverManager;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DatabaseHelper extends  SQLiteOpenHelper{
 
@@ -21,6 +18,10 @@ public class DatabaseHelper extends  SQLiteOpenHelper{
     private String currentUserFirstName;
     private String currentUserLastName;
 
+
+    //course ID, course title
+    public HashMap<String, String> courses = new HashMap<>();
+
     public DatabaseHelper(Context context) {
         super(context, "Login.db", null, 1);
     }
@@ -29,6 +30,33 @@ public class DatabaseHelper extends  SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase MyDB) {
         MyDB.execSQL("create Table users (email TEXT primary key, password TEXT, firstname TEXT, lastname TEXT)");
+        MyDB.execSQL("create Table courses (id TEXT primary key, title TEXT, description TEXT)");
+    }
+
+    public void insertCourses(ArrayList<CourseModel> courseModels){
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+
+        for (int i = 0; i < courseModels.size(); i++) {
+            String courseID = courseModels.get(i).getCourseID();
+            String courseName = courseModels.get(i).getCourseName();
+            courses.put(courseID, courseName);
+        }
+
+        ContentValues contentValues = new ContentValues();
+
+        for (String i : courses.keySet()) {
+            if (!checkCourseID(i)) {
+                contentValues.put("id", i);
+                contentValues.put("title", courses.get(i));
+                MyDB.insert("courses", null, contentValues);
+            }
+        }
+    }
+
+    public Boolean checkCourseID(String courseID){
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        Cursor cursor = MyDB.rawQuery("Select * from courses where id = ?", new String[] {courseID});
+        return cursor.getCount() > 0;
     }
 
     @Override

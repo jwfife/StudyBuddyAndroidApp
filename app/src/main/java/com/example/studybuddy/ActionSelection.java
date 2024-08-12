@@ -6,9 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import java.util.ArrayList;
+
 public class ActionSelection extends AppCompatActivity {
 
     String currentUserEmail = "";
+    ArrayList<String> currCourseList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,17 +23,21 @@ public class ActionSelection extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             currentUserEmail = extras.getString("key");
+            currCourseList = extras.getStringArrayList("course_list");
         }
 
 
 
         View searchForClasses = findViewById(R.id.searchForClasses);
+        Bundle extrasToNextPage = new Bundle();
+        extrasToNextPage.putString("key", currentUserEmail);
+        extrasToNextPage.putStringArrayList("course_list", currCourseList);
         searchForClasses.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent i = new Intent(ActionSelection.this, SearchForClasses.class);
-                        i.putExtra("key", currentUserEmail);
+                        i.putExtras(extrasToNextPage);
                         startActivity(i);
                     }
                 }
@@ -43,7 +50,7 @@ public class ActionSelection extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent i = new Intent(ActionSelection.this, ProfilePage.class);
                         //passes the user's email through the intent to the next activity
-                        i.putExtra("key", currentUserEmail);
+                        i.putExtras(extrasToNextPage);
                         startActivity(i);
                     }
                 }

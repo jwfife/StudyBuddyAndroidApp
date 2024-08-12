@@ -1,8 +1,8 @@
 package com.example.studybuddy;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,12 +10,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class SearchForClasses extends AppCompatActivity {
-
     String currentUserEmail = "";
 
     ArrayList<CourseModel> courseModels = new ArrayList<>();
+
+    static ArrayList<String> addedCoursesStrings = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,8 @@ public class SearchForClasses extends AppCompatActivity {
         if (extras != null) {
             currentUserEmail = extras.getString("key");
         }
+
+
 
         View viewMessages = findViewById(R.id.messagesPage);
         viewMessages.setOnClickListener(
@@ -61,13 +65,16 @@ public class SearchForClasses extends AppCompatActivity {
         );
 
         View viewProfile = findViewById(R.id.viewProfileButton);
-        String finalCurrentUserEmail = currentUserEmail;
+        //String finalCurrentUserEmail = currentUserEmail;
+        Bundle extrasToProfile = new Bundle();
+        extrasToProfile.putString("key", currentUserEmail);
+        extrasToProfile.putStringArrayList("course_list", addedCoursesStrings);
         viewProfile.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent i = new Intent(SearchForClasses.this, ProfilePage.class);
-                        i.putExtra("key", currentUserEmail);
+                        i.putExtras(extrasToProfile);
                         startActivity(i);
                     }
                 }
@@ -84,6 +91,16 @@ public class SearchForClasses extends AppCompatActivity {
                     courseIDs[i]));
         }
 
+        //get coursemodels arraylist from here?
+
+    }
+
+    public static void getAddedCourses(ArrayList<String> addedCourses){
+        addedCoursesStrings.addAll(addedCourses);
+//        for (int i = 0; i < addedCoursesStrings.size(); i++){
+//            System.out.println(addedCoursesStrings.get(i));
+//        }
+        //addedCoursesStrings = (ArrayList<String>)addedCourses.clone();
     }
 
 
