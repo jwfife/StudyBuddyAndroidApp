@@ -27,6 +27,7 @@ public class ProfilePage extends AppCompatActivity {
 
     ArrayList<String> currAddedCourses = new ArrayList<>();
     ArrayList<String> savedCourseList = new ArrayList<>();
+    ArrayList<String> addedCoursesIDs = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class ProfilePage extends AppCompatActivity {
         if (extras != null) {
             currentUserEmail = extras.getString("key");
             currAddedCourses = extras.getStringArrayList("course_list");
+            addedCoursesIDs = extras.getStringArrayList("courseID_list");
             try {
                 currentUserFirst = DB.getFirstName(currentUserEmail);
                 currentUserLast = DB.getLastName(currentUserEmail);
@@ -52,10 +54,18 @@ public class ProfilePage extends AppCompatActivity {
                 lastName.setText(currentUserLast);
 
                 if (currAddedCourses != null) {
+
                     HashSet hashCourseStrs = new HashSet(currAddedCourses);
                     ArrayList<String> uniqueCourseList = new ArrayList<String>();
+
                     uniqueCourseList.addAll(hashCourseStrs);
                     savedCourseList.addAll(uniqueCourseList);
+
+                    HashSet hashCourseIDs = new HashSet(addedCoursesIDs);
+                    ArrayList<String> uniqueCourseIDList = new ArrayList<>();
+
+                    uniqueCourseIDList.addAll(hashCourseIDs);
+                    DB.insertEnrollment(currentUserEmail, uniqueCourseIDList);
 
                     for (int i = 0; i < uniqueCourseList.size(); i++) {
                         StringBuilder str = new StringBuilder();
@@ -74,7 +84,7 @@ public class ProfilePage extends AppCompatActivity {
 
         courseList.setText(finalCourseList);
 
-        if (courseList.getText().equals(null)) {
+        if (courseList.getText().toString().equals(null)) {
             courseList.setText("No courses yet");
         }
 

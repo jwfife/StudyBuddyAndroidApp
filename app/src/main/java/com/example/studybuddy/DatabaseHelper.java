@@ -31,6 +31,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase MyDB) {
         MyDB.execSQL("create Table users (email TEXT primary key, password TEXT, firstname TEXT, lastname TEXT)");
         MyDB.execSQL("create Table courses (id TEXT primary key, title TEXT, description TEXT)");
+        MyDB.execSQL("create Table enrolled (user_email TEXT primary key, course_id TEXT)");
     }
 
     public void insertCourses(ArrayList<CourseModel> courseModels){
@@ -51,6 +52,25 @@ public class DatabaseHelper extends  SQLiteOpenHelper{
                 MyDB.insert("courses", null, contentValues);
             }
         }
+    }
+
+    public void insertEnrollment(String currentUserEmail, ArrayList<String> courseID){
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        for (int i = 0; i < courseID.size(); i++){
+            if (!checkEnrollment(currentUserEmail, courseID.get(i))){
+                contentValues.put("user_email", currentUserEmail);
+                contentValues.put("course_id", courseID.get(i));
+                MyDB.insert("courses", null, contentValues);
+            }
+        }
+    }
+
+    public Boolean checkEnrollment(String userEmail, String courseID) {
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        Cursor cursor = MyDB.rawQuery("Select * from enrolled where user_email = ? and " +
+                "course_id = ?", new String[] {userEmail, courseID});
+        return cursor.getCount() > 0;
     }
 
     public Boolean checkCourseID(String courseID){

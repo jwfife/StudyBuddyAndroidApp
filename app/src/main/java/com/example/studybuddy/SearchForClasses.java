@@ -18,6 +18,7 @@ public class SearchForClasses extends AppCompatActivity {
     ArrayList<CourseModel> courseModels = new ArrayList<>();
 
     static ArrayList<String> addedCoursesStrings = new ArrayList<>();
+    static ArrayList<String> addedCoursesIDs = new ArrayList<>();
 
     DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
@@ -40,7 +41,6 @@ public class SearchForClasses extends AppCompatActivity {
         if (extras != null) {
             currentUserEmail = extras.getString("key");
         }
-
 
 
         View viewMessages = findViewById(R.id.messagesPage);
@@ -72,6 +72,7 @@ public class SearchForClasses extends AppCompatActivity {
         Bundle extrasToProfile = new Bundle();
         extrasToProfile.putString("key", currentUserEmail);
         extrasToProfile.putStringArrayList("course_list", addedCoursesStrings);
+        extrasToProfile.putStringArrayList("courseID_list", addedCoursesIDs);
         viewProfile.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -95,18 +96,13 @@ public class SearchForClasses extends AppCompatActivity {
         }
 
         databaseHelper.insertCourses(courseModels);
-        //get coursemodels arraylist from here?
 
     }
 
-    public static void getAddedCourses(ArrayList<String> addedCourses){
+    public static void getAddedCourses(ArrayList<String> addedCourses, ArrayList<String> addedCoursesIDs){
         addedCoursesStrings.addAll(addedCourses);
-//        for (int i = 0; i < addedCoursesStrings.size(); i++){
-//            System.out.println(addedCoursesStrings.get(i));
-//        }
-        //addedCoursesStrings = (ArrayList<String>)addedCourses.clone();
+        addedCoursesIDs.addAll(addedCoursesIDs);
     }
-
 
 
 }

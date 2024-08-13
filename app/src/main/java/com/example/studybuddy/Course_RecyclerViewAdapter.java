@@ -13,17 +13,20 @@ import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Course_RecyclerViewAdapter extends RecyclerView.Adapter<Course_RecyclerViewAdapter.MyViewHolder> {
     Context context;
     ArrayList<CourseModel> courseModels;
     static ArrayList<String> addedCoursesStrings = new ArrayList<>();
-
+    static ArrayList<String> addedCoursesIDs = new ArrayList<>();
+    public static DatabaseHelper databaseHelper;
 
     public Course_RecyclerViewAdapter(Context context, ArrayList<CourseModel> courseModels) {
         this.context = context;
         this.courseModels = courseModels;
+        databaseHelper = new DatabaseHelper(context);
     }
 
     @NonNull
@@ -71,19 +74,18 @@ public class Course_RecyclerViewAdapter extends RecyclerView.Adapter<Course_Recy
                 @Override
                 public void onClick(View v) {
                     String fullCourseString = tvID.getText().toString() + " " + tvName.getText().toString();
+                    String courseID = tvID.getText().toString();
 
                     if (addedCoursesStrings.contains(fullCourseString)) {
                         addedCoursesStrings.remove(fullCourseString);
+                        addedCoursesIDs.remove(courseID);
                     }
                     else {
                         addedCoursesStrings.add(fullCourseString);
+                        addedCoursesIDs.add(courseID);
                     }
-                    getAddedCourses(addedCoursesStrings);
-//                    System.out.println("----START OF LOOP----");
-//                    for (int i = 0; i < addedCoursesStrings.size(); i++){
-//                        System.out.println(addedCoursesStrings.get(i));
-//                    }
-//                    System.out.println("----END OF LOOP----");
+                    getAddedCourses(addedCoursesStrings, addedCoursesIDs);
+
                 }
             });
 
