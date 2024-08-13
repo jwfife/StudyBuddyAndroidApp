@@ -19,6 +19,8 @@ public class SearchForClasses extends AppCompatActivity {
 
     static ArrayList<String> addedCoursesStrings = new ArrayList<>();
 
+    DatabaseHelper databaseHelper = new DatabaseHelper(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +34,7 @@ public class SearchForClasses extends AppCompatActivity {
                 courseModels);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -91,6 +94,7 @@ public class SearchForClasses extends AppCompatActivity {
                     courseIDs[i]));
         }
 
+        databaseHelper.insertCourses(courseModels);
         //get coursemodels arraylist from here?
 
     }

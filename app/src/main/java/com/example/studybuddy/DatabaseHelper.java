@@ -62,6 +62,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper{
     @Override
     public void onUpgrade(SQLiteDatabase MyDB, int oldVersion, int newVersion) {
         MyDB.execSQL("drop Table if exists users");
+        MyDB.execSQL("drop Table if exists courses");
     }
 
     public Boolean insertData(String email, String password, String firstname, String lastname){
