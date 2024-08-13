@@ -18,7 +18,7 @@ public class SearchForClasses extends AppCompatActivity {
     ArrayList<CourseModel> courseModels = new ArrayList<>();
 
     static ArrayList<String> addedCoursesStrings = new ArrayList<>();
-    static ArrayList<String> addedCoursesIDs = new ArrayList<>();
+    static ArrayList<String> addedCoursesIDStrings = new ArrayList<>();
 
     DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
@@ -72,7 +72,7 @@ public class SearchForClasses extends AppCompatActivity {
         Bundle extrasToProfile = new Bundle();
         extrasToProfile.putString("key", currentUserEmail);
         extrasToProfile.putStringArrayList("course_list", addedCoursesStrings);
-        extrasToProfile.putStringArrayList("courseID_list", addedCoursesIDs);
+        extrasToProfile.putStringArrayList("courseID_list", addedCoursesIDStrings);
         viewProfile.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -101,7 +101,7 @@ public class SearchForClasses extends AppCompatActivity {
 
     public static void getAddedCourses(ArrayList<String> addedCourses, ArrayList<String> addedCoursesIDs){
         addedCoursesStrings.addAll(addedCourses);
-        addedCoursesIDs.addAll(addedCoursesIDs);
+        addedCoursesIDStrings.addAll(addedCoursesIDs);
     }
 
 

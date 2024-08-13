@@ -61,12 +61,6 @@ public class ProfilePage extends AppCompatActivity {
                     uniqueCourseList.addAll(hashCourseStrs);
                     savedCourseList.addAll(uniqueCourseList);
 
-                    HashSet hashCourseIDs = new HashSet(addedCoursesIDs);
-                    ArrayList<String> uniqueCourseIDList = new ArrayList<>();
-
-                    uniqueCourseIDList.addAll(hashCourseIDs);
-                    DB.insertEnrollment(currentUserEmail, uniqueCourseIDList);
-
                     for (int i = 0; i < uniqueCourseList.size(); i++) {
                         StringBuilder str = new StringBuilder();
                         str.append(uniqueCourseList.get(i).toString());
@@ -75,6 +69,15 @@ public class ProfilePage extends AppCompatActivity {
                         strBuilder.append(uniqueCourseList.get(i));
                     }
                 }
+
+                if (addedCoursesIDs != null) {
+                    HashSet hashCourseIDs = new HashSet(addedCoursesIDs);
+                    ArrayList<String> uniqueCourseIDList = new ArrayList<>();
+
+                    uniqueCourseIDList.addAll(hashCourseIDs);
+                    DB.insertEnrollment(currentUserEmail, uniqueCourseIDList);
+                }
+
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
