@@ -19,13 +19,15 @@ import java.util.ArrayList;
 public class Course_RecyclerViewAdapter extends RecyclerView.Adapter<Course_RecyclerViewAdapter.MyViewHolder> {
     Context context;
     ArrayList<CourseModel> courseModels;
+    static String currentUserEmail;
     static ArrayList<String> addedCoursesStrings = new ArrayList<>();
     static ArrayList<String> addedCoursesIDs = new ArrayList<>();
     public static DatabaseHelper databaseHelper;
 
-    public Course_RecyclerViewAdapter(Context context, ArrayList<CourseModel> courseModels) {
+    public Course_RecyclerViewAdapter(Context context, ArrayList<CourseModel> courseModels, String currentUserEmail) {
         this.context = context;
         this.courseModels = courseModels;
+        Course_RecyclerViewAdapter.currentUserEmail = currentUserEmail;
         databaseHelper = new DatabaseHelper(context);
     }
 
@@ -46,6 +48,10 @@ public class Course_RecyclerViewAdapter extends RecyclerView.Adapter<Course_Recy
 
         holder.tvName.setText(courseModels.get(position).getCourseName());
         holder.tvID.setText(courseModels.get(position).getCourseID());
+
+        if (databaseHelper.checkEnrollment(currentUserEmail, courseModels.get(position).getCourseID())){
+            holder.addCourse.setChecked(true);
+        }
     }
 
     @Override
@@ -58,7 +64,7 @@ public class Course_RecyclerViewAdapter extends RecyclerView.Adapter<Course_Recy
         //grabbing views from recycler_view_row layout file
         //kind of like the onCreate method
 
-        ArrayList<CourseModel> courseModelsTest = new ArrayList<>();
+        public ArrayList<CourseModel> courseModelsTest = new ArrayList<>();
         TextView tvName, tvID;
         ToggleButton addCourse;
 
@@ -75,17 +81,25 @@ public class Course_RecyclerViewAdapter extends RecyclerView.Adapter<Course_Recy
                 public void onClick(View v) {
                     String fullCourseString = tvID.getText().toString() + " " + tvName.getText().toString();
                     String courseID = tvID.getText().toString();
+                    DatabaseHelper databaseHelper1 = new DatabaseHelper(itemView.getContext());
 
-                    if (addedCoursesStrings.contains(fullCourseString)) {
+
+                    //TODO: get rid of display string on profile when removing a course
+                    //removes enrollment
+                    if (databaseHelper.checkEnrollment(currentUserEmail, courseID)){
+                        databaseHelper.removeEnrollment(currentUserEmail, courseID);
                         addedCoursesStrings.remove(fullCourseString);
                         addedCoursesIDs.remove(courseID);
+                        addCourse.setChecked(false);
                     }
+                    //adds enrollment
                     else {
                         addedCoursesStrings.add(fullCourseString);
                         addedCoursesIDs.add(courseID);
+                        addCourse.setChecked(true);
                     }
-                    getAddedCourses(addedCoursesStrings, addedCoursesIDs);
 
+                    getAddedCourses(addedCoursesStrings, addedCoursesIDs);
                 }
             });
 

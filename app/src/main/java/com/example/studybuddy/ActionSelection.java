@@ -12,6 +12,7 @@ public class ActionSelection extends AppCompatActivity {
 
     String currentUserEmail = "";
     ArrayList<String> currCourseList = new ArrayList<>();
+    ArrayList<String> addedCoursesIDs = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +25,8 @@ public class ActionSelection extends AppCompatActivity {
         if (extras != null) {
             currentUserEmail = extras.getString("key");
             currCourseList = extras.getStringArrayList("course_list");
+            addedCoursesIDs = extras.getStringArrayList("courseID_list");
         }
-
-
 
         View searchForClasses = findViewById(R.id.searchForClasses);
         Bundle extrasToNextPage = new Bundle();

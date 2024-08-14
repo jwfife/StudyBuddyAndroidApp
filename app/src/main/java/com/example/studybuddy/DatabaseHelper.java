@@ -66,10 +66,16 @@ public class DatabaseHelper extends  SQLiteOpenHelper{
         }
     }
 
-    public Boolean checkEnrollment(String userEmail, String courseID) {
+    public void removeEnrollment(String currentUserEmail, String courseIDToRemove){
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        MyDB.delete("enrolled", "user_email = ? AND " +
+                "course_id = ?", new String[] {currentUserEmail, courseIDToRemove} );
+    }
+
+    public Boolean checkEnrollment(String currentUserEmail, String courseID) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
         Cursor cursor = MyDB.rawQuery("Select * from enrolled where user_email = ? and " +
-                "course_id = ?", new String[] {userEmail, courseID});
+                "course_id = ?", new String[] {currentUserEmail, courseID});
         return cursor.getCount() > 0;
     }
 
@@ -103,8 +109,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper{
         SQLiteDatabase MyDB = this.getWritableDatabase();
         Cursor cursor = MyDB.rawQuery("Select * from users where email = ?", new String[] {email});
         return cursor.getCount() > 0;
-
-
     }
 
     public String getFirstName(String email) throws SQLException {

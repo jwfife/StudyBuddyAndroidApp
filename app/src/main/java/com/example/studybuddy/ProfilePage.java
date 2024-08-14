@@ -87,7 +87,7 @@ public class ProfilePage extends AppCompatActivity {
 
         courseList.setText(finalCourseList);
 
-        if (courseList.getText().toString().equals(null)) {
+        if (courseList.getText().toString().isEmpty()) {
             courseList.setText("No courses yet");
         }
 
@@ -120,6 +120,7 @@ public class ProfilePage extends AppCompatActivity {
         Bundle extrasToHome = new Bundle();
         extrasToHome.putString("key", currentUserEmail);
         extrasToHome.putStringArrayList("course_list", savedCourseList);
+        extrasToHome.putStringArrayList("courseID_list", addedCoursesIDs);
         goToHomePage.setOnClickListener(
                 new View.OnClickListener() {
                     @Override

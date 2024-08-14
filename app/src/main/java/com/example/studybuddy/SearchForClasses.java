@@ -2,6 +2,7 @@ package com.example.studybuddy;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 
@@ -31,16 +32,15 @@ public class SearchForClasses extends AppCompatActivity {
 
         setUpCourseModels();
 
-        Course_RecyclerViewAdapter adapter = new Course_RecyclerViewAdapter(this,
-                courseModels);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             currentUserEmail = extras.getString("key");
         }
+
+        Course_RecyclerViewAdapter adapter = new Course_RecyclerViewAdapter(this,
+                courseModels, currentUserEmail);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
         View viewMessages = findViewById(R.id.messagesPage);
