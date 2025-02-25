@@ -1,6 +1,8 @@
 package com.example.studybuddy;
 
 import static com.example.studybuddy.SearchForClasses.getAddedCourses;
+import static com.example.studybuddy.SearchForClasses.getRemovedCourses;
+import static com.example.studybuddy.SearchForClasses.removedCoursesIDStrings;
 
 import android.app.Activity;
 import android.content.Context;
@@ -24,10 +26,10 @@ public class Course_RecyclerViewAdapter extends RecyclerView.Adapter<Course_Recy
     static ArrayList<String> addedCoursesIDs = new ArrayList<>();
     public static DatabaseHelper databaseHelper;
 
-    public Course_RecyclerViewAdapter(Context context, ArrayList<CourseModel> courseModels, String currentUserEmail) {
+    public Course_RecyclerViewAdapter(Context context, ArrayList<CourseModel> courseModels, String userEmail) {
         this.context = context;
         this.courseModels = courseModels;
-        Course_RecyclerViewAdapter.currentUserEmail = currentUserEmail;
+        Course_RecyclerViewAdapter.currentUserEmail = userEmail;
         databaseHelper = new DatabaseHelper(context);
     }
 
@@ -83,14 +85,18 @@ public class Course_RecyclerViewAdapter extends RecyclerView.Adapter<Course_Recy
                     String courseID = tvID.getText().toString();
                     DatabaseHelper databaseHelper1 = new DatabaseHelper(itemView.getContext());
 
+                    ArrayList<String> removedCourses = new ArrayList<>();
+                    ArrayList<String> removedCourseIDs = new ArrayList<>();
 
-                    //TODO: get rid of display string on profile when removing a course
                     //removes enrollment
-                    if (databaseHelper.checkEnrollment(currentUserEmail, courseID)){
-                        databaseHelper.removeEnrollment(currentUserEmail, courseID);
+                    if (databaseHelper.checkEnrollment(Course_RecyclerViewAdapter.currentUserEmail, courseID)){
+                        databaseHelper.removeEnrollment(Course_RecyclerViewAdapter.currentUserEmail, courseID);
                         addedCoursesStrings.remove(fullCourseString);
                         addedCoursesIDs.remove(courseID);
                         addCourse.setChecked(false);
+
+                        removedCourses.add(fullCourseString);
+                        removedCourseIDs.add(courseID);
                     }
                     //adds enrollment
                     else {
@@ -100,6 +106,7 @@ public class Course_RecyclerViewAdapter extends RecyclerView.Adapter<Course_Recy
                     }
 
                     getAddedCourses(addedCoursesStrings, addedCoursesIDs);
+                    getRemovedCourses(removedCourses, removedCourseIDs);
                 }
             });
 

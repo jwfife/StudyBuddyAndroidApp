@@ -28,12 +28,13 @@ public class ProfilePage extends AppCompatActivity {
     ArrayList<String> currAddedCourses = new ArrayList<>();
     ArrayList<String> savedCourseList = new ArrayList<>();
     ArrayList<String> addedCoursesIDs = new ArrayList<>();
+    ArrayList<String> removedCourses = new ArrayList<>();
+    ArrayList<String> removedCoursesIDs = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_view);
-
 
         firstName = findViewById(R.id.firstName);
         lastName = findViewById(R.id.lastName);
@@ -47,49 +48,41 @@ public class ProfilePage extends AppCompatActivity {
             currentUserEmail = extras.getString("key");
             currAddedCourses = extras.getStringArrayList("course_list");
             addedCoursesIDs = extras.getStringArrayList("courseID_list");
+            removedCourses = extras.getStringArrayList("removed_course_list");
+            removedCoursesIDs = extras.getStringArrayList("removed_course_ids");
             try {
                 currentUserFirst = DB.getFirstName(currentUserEmail);
                 currentUserLast = DB.getLastName(currentUserEmail);
                 firstName.setText(currentUserFirst);
                 lastName.setText(currentUserLast);
 
-                if (currAddedCourses != null) {
-
-                    HashSet hashCourseStrs = new HashSet(currAddedCourses);
-                    ArrayList<String> uniqueCourseList = new ArrayList<String>();
-
-                    uniqueCourseList.addAll(hashCourseStrs);
-                    savedCourseList.addAll(uniqueCourseList);
-
-                    for (int i = 0; i < uniqueCourseList.size(); i++) {
-                        StringBuilder str = new StringBuilder();
-                        str.append(uniqueCourseList.get(i).toString());
-                        str.append(" \n");
-                        uniqueCourseList.set(i, String.valueOf(str));
-                        strBuilder.append(uniqueCourseList.get(i));
-                    }
-                }
-
-                if (addedCoursesIDs != null) {
-                    HashSet hashCourseIDs = new HashSet(addedCoursesIDs);
-                    ArrayList<String> uniqueCourseIDList = new ArrayList<>();
-
-                    uniqueCourseIDList.addAll(hashCourseIDs);
-                    DB.insertEnrollment(currentUserEmail, uniqueCourseIDList);
-                }
-
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
 
-        String finalCourseList = strBuilder.toString();
-
-        courseList.setText(finalCourseList);
-
-        if (courseList.getText().toString().isEmpty()) {
-            courseList.setText("No courses yet");
+        //to enroll in course through database
+        if (addedCoursesIDs != null) {
+            HashSet hashCourseIDs = new HashSet(addedCoursesIDs);
+            ArrayList<String> uniqueCourseIDList = new ArrayList<>(hashCourseIDs);
+            DB.insertEnrollment(currentUserEmail, uniqueCourseIDList);
+            //just added 9/3
+//            for (String a : uniqueCourseIDList){
+//                currAddedCourses.add(DB.getCourseTitle(a));
+//            }
         }
+
+        if (currAddedCourses == null) {
+            String noCoursesYet = "No courses yet";
+            courseList.setText(noCoursesYet);
+        }
+        else {
+            setCourseList();
+        }
+
+//        if (courseList.getText().toString().isEmpty()) {
+//            courseList.setText("No courses yet");
+//        }
 
 
         View viewMessages = findViewById(R.id.messagesPage);
@@ -133,16 +126,25 @@ public class ProfilePage extends AppCompatActivity {
         );
     }
 
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        TextView firstName = findViewById(R.id.firstName);
-//        TextView lastName = findViewById(R.id.lastName);
-//        SharedPreferences.Editor prefEditor = getSharedPreferences("Preferences", Context.MODE_PRIVATE).edit();
-//
-//        prefEditor.putString("userFirst", firstName.getText().toString());
-//        prefEditor.putString("userLast", lastName.getText().toString());
-//        prefEditor.commit();
-//    }
+    public void setCourseList(){
+        HashSet hashCourseStrs = new HashSet(currAddedCourses);
+        ArrayList<String> uniqueCourseList = new ArrayList<>(hashCourseStrs);
 
+        savedCourseList.addAll(uniqueCourseList);
+
+        if (removedCourses != null) {
+            for (int i = 0; i < removedCourses.size(); i++) {
+                savedCourseList.remove(removedCourses.get(i));
+            }
+        }
+        for (int k = 0; k < savedCourseList.size(); k++) {
+            String str = savedCourseList.get(k) + " \n";
+            savedCourseList.set(k, str);
+            strBuilder.append(savedCourseList.get(k));
+        }
+
+        String finalCourseList = strBuilder.toString();
+        courseList.setText(finalCourseList);
+    }
 }
+

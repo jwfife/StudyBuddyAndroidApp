@@ -80,7 +80,7 @@ public class RegisterAccount extends AppCompatActivity {
                         Boolean checkForDupeEmail = DB.checkEmail(user_email);
                         if (!checkForDupeEmail) {
                             Boolean insert = DB.insertData(user_email, user_pass, userFirstName, userLastName);
-                            if (insert) {
+                            if (insert && passwordValidate()) {
                                 Toast.makeText(RegisterAccount.this, "Registration complete!", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), SignIn.class);
                                 startActivity(intent);

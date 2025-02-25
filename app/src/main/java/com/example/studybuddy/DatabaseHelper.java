@@ -5,6 +5,7 @@ import android.database.Cursor;
 
 import android.database.sqlite.*;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,6 +53,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper{
                 MyDB.insert("courses", null, contentValues);
             }
         }
+        MyDB.close();
     }
 
     public void insertEnrollment(String currentUserEmail, ArrayList<String> courseID){
@@ -64,12 +66,14 @@ public class DatabaseHelper extends  SQLiteOpenHelper{
                 MyDB.insert("enrolled", null, contentValues);
             }
         }
+        MyDB.close();
     }
 
     public void removeEnrollment(String currentUserEmail, String courseIDToRemove){
         SQLiteDatabase MyDB = this.getWritableDatabase();
-        MyDB.delete("enrolled", "user_email = ? AND " +
-                "course_id = ?", new String[] {currentUserEmail, courseIDToRemove} );
+        MyDB.delete("enrolled", "user_email = ? and course_id = ?",
+                new String[] {currentUserEmail, courseIDToRemove} );
+        MyDB.close();
     }
 
     public Boolean checkEnrollment(String currentUserEmail, String courseID) {
@@ -83,6 +87,14 @@ public class DatabaseHelper extends  SQLiteOpenHelper{
         SQLiteDatabase MyDB = this.getWritableDatabase();
         Cursor cursor = MyDB.rawQuery("Select * from courses where id = ?", new String[] {courseID});
         return cursor.getCount() > 0;
+    }
+
+    //just added 9/3
+    public String getCourseTitle(String courseID){
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        String courseTitle = "";
+        courseTitle = MyDB.rawQuery("Select * from courses where id = ?", new String[] {courseID}).toString();
+        return courseTitle;
     }
 
     @Override
@@ -101,7 +113,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper{
         contentValues.put("lastname", lastname);
 
         long result = MyDB.insert("users", null, contentValues);
-
+        MyDB.close();
         return result != -1;
     }
 

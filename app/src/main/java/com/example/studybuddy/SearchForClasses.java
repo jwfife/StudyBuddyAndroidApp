@@ -21,6 +21,9 @@ public class SearchForClasses extends AppCompatActivity {
     static ArrayList<String> addedCoursesStrings = new ArrayList<>();
     static ArrayList<String> addedCoursesIDStrings = new ArrayList<>();
 
+    static ArrayList<String> removedCoursesStrings = new ArrayList<>();
+    static ArrayList<String> removedCoursesIDStrings = new ArrayList<>();
+
     DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
     @Override
@@ -68,11 +71,14 @@ public class SearchForClasses extends AppCompatActivity {
         );
 
         View viewProfile = findViewById(R.id.viewProfileButton);
-        //String finalCurrentUserEmail = currentUserEmail;
         Bundle extrasToProfile = new Bundle();
+
         extrasToProfile.putString("key", currentUserEmail);
         extrasToProfile.putStringArrayList("course_list", addedCoursesStrings);
         extrasToProfile.putStringArrayList("courseID_list", addedCoursesIDStrings);
+        extrasToProfile.putStringArrayList("removed_course_list", removedCoursesStrings);
+        extrasToProfile.putStringArrayList("removed_course_ids", removedCoursesIDStrings);
+
         viewProfile.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -104,5 +110,9 @@ public class SearchForClasses extends AppCompatActivity {
         addedCoursesIDStrings.addAll(addedCoursesIDs);
     }
 
+    public static void getRemovedCourses(ArrayList<String> removedCourses, ArrayList<String> removedCoursesIDs) {
+        removedCoursesStrings.addAll(removedCourses);
+        removedCoursesIDStrings.addAll(removedCoursesIDs);
+    }
 
 }
