@@ -138,7 +138,15 @@ public class ProfilePage extends AppCompatActivity {
             }
         }
         for (int k = 0; k < savedCourseList.size(); k++) {
-            String str = savedCourseList.get(k) + " \n";
+            String str = "";
+
+            //to make sure that duplicate newlines arent added
+            if (!savedCourseList.get(k).contains("\n")){
+                str = savedCourseList.get(k) + " \n";
+            }
+            else{
+                str = savedCourseList.get(k);
+            }
             savedCourseList.set(k, str);
             strBuilder.append(savedCourseList.get(k));
         }
