@@ -97,7 +97,7 @@ public class ProfilePage extends AppCompatActivity {
         );
     }
 
-    public void assignUserVariables(Bundle extras){
+    public void assignUserVariables(Bundle extras) {
         currentUserEmail = extras.getString("key");
         try {
             currentUserFirst = DB.getFirstName(currentUserEmail);
@@ -110,20 +110,20 @@ public class ProfilePage extends AppCompatActivity {
         }
     }
 
-    public void assignCourseVariables(Bundle extras){
+    public void assignCourseVariables(Bundle extras) {
         addedCourses = extras.getStringArrayList("course_list");
         addedCoursesIDs = extras.getStringArrayList("courseID_list");
         removedCourses = extras.getStringArrayList("removed_course_list");
         removedCoursesIDs = extras.getStringArrayList("removed_course_ids");
     }
 
-    public void enrollThroughDatabase(){
+    public void enrollThroughDatabase() {
         LinkedHashSet<String> uniqueCourseIDSet = new LinkedHashSet<String>(addedCoursesIDs);
         ArrayList<String> uniqueCourseIDs = new ArrayList<String>(uniqueCourseIDSet);
         DB.insertEnrollment(currentUserEmail, uniqueCourseIDs);
     }
 
-    public void setCourseList(){
+    public void setCourseList() {
         LinkedHashSet<String> uniqueCourseList = new LinkedHashSet<String>(addedCourses);
         updatedCourseList.addAll(uniqueCourseList);
 
@@ -143,7 +143,7 @@ public class ProfilePage extends AppCompatActivity {
         courseList.setText(finalCourseList);
     }
 
-    public ArrayList<String> removeCoursesFromSavedList(ArrayList<String> updatedCourseList, ArrayList<String> removedCourses){
+    public ArrayList<String> removeCoursesFromSavedList(ArrayList<String> updatedCourseList, ArrayList<String> removedCourses) {
         for (int i = 0; i < removedCourses.size(); i++) {
             updatedCourseList.remove(removedCourses.get(i));
         }
