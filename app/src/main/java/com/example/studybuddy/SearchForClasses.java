@@ -1,29 +1,20 @@
 package com.example.studybuddy;
 
-import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class SearchForClasses extends AppCompatActivity {
     String currentUserEmail = "";
-
     ArrayList<CourseModel> courseModels = new ArrayList<>();
-
     static ArrayList<String> addedCoursesStrings = new ArrayList<>();
     static ArrayList<String> addedCoursesIDStrings = new ArrayList<>();
-
     static ArrayList<String> removedCoursesStrings = new ArrayList<>();
     static ArrayList<String> removedCoursesIDStrings = new ArrayList<>();
-
     DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
     @Override
@@ -46,8 +37,8 @@ public class SearchForClasses extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
-        View viewMessages = findViewById(R.id.messagesPage);
-        viewMessages.setOnClickListener(
+        View viewMessagesPage = findViewById(R.id.messagesPage);
+        viewMessagesPage.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -58,8 +49,8 @@ public class SearchForClasses extends AppCompatActivity {
                 }
         );
 
-        View viewHomepage = findViewById(R.id.homePageButton);
-        viewHomepage.setOnClickListener(
+        View viewHomePage = findViewById(R.id.homePageButton);
+        viewHomePage.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -70,16 +61,14 @@ public class SearchForClasses extends AppCompatActivity {
                 }
         );
 
-        View viewProfile = findViewById(R.id.viewProfileButton);
+        View viewProfilePage = findViewById(R.id.viewProfileButton);
         Bundle extrasToProfile = new Bundle();
-
         extrasToProfile.putString("key", currentUserEmail);
         extrasToProfile.putStringArrayList("course_list", addedCoursesStrings);
         extrasToProfile.putStringArrayList("courseID_list", addedCoursesIDStrings);
         extrasToProfile.putStringArrayList("removed_course_list", removedCoursesStrings);
         extrasToProfile.putStringArrayList("removed_course_ids", removedCoursesIDStrings);
-
-        viewProfile.setOnClickListener(
+        viewProfilePage.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -92,20 +81,19 @@ public class SearchForClasses extends AppCompatActivity {
 
     }
 
-    private void setUpCourseModels(){
+    private void setUpCourseModels() {
         String[] courseNames = getResources().getStringArray(R.array.compsci_courses_names);
         String[] courseIDs = getResources().getStringArray(R.array.cs_course_ids);
 
-        for (int i = 0; i < courseNames.length; i++){
+        //adds the courses for each of the recyclerview models/entities
+        for (int i = 0; i < courseNames.length; i++) {
             courseModels.add(new CourseModel(courseNames[i],
                     courseIDs[i]));
         }
-
         databaseHelper.insertCourses(courseModels);
-
     }
 
-    public static void getAddedCourses(ArrayList<String> addedCourses, ArrayList<String> addedCoursesIDs){
+    public static void getAddedCourses(ArrayList<String> addedCourses, ArrayList<String> addedCoursesIDs) {
         addedCoursesStrings.addAll(addedCourses);
         addedCoursesIDStrings.addAll(addedCoursesIDs);
     }
