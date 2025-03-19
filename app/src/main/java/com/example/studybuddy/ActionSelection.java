@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class ActionSelection extends AppCompatActivity {
 
     String currentUserEmail = "";
-    ArrayList<String> currCourseList = new ArrayList<>();
+    ArrayList<String> addedCourseList = new ArrayList<>();
     ArrayList<String> addedCoursesIDs = new ArrayList<>();
 
     @Override
@@ -19,19 +19,18 @@ public class ActionSelection extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.action_selection);
 
-
         //retrieves the logged in user's email from the passed intent
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             currentUserEmail = extras.getString("key");
-            currCourseList = extras.getStringArrayList("course_list");
+            addedCourseList = extras.getStringArrayList("course_list");
             addedCoursesIDs = extras.getStringArrayList("courseID_list");
         }
 
         View searchForClasses = findViewById(R.id.searchForClasses);
         Bundle extrasToNextPage = new Bundle();
         extrasToNextPage.putString("key", currentUserEmail);
-        extrasToNextPage.putStringArrayList("course_list", currCourseList);
+        extrasToNextPage.putStringArrayList("course_list", addedCourseList);
         searchForClasses.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -68,8 +67,8 @@ public class ActionSelection extends AppCompatActivity {
                 }
         );
 
-        View goToMap = findViewById(R.id.groupMap);
-        goToMap.setOnClickListener(
+        View viewMapPage = findViewById(R.id.groupMap);
+        viewMapPage.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

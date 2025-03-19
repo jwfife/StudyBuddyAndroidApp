@@ -26,11 +26,11 @@ public class RegisterAccount extends AppCompatActivity {
     - use that database as an option for a drop down menu when registering for an account
      */
 
-    EditText email, password, firstName, lastName;
+    EditText emailField, passwordField, firstNameField, lastNameField;
     Button register;
     DatabaseHelper DB;
-    ImageView viewingEye;
-    CardView card1, card2, card3, card4;
+    ImageView viewPasswordEye;
+    CardView checkbox1, checkbox2, checkbox3, checkbox4;
 
     @SuppressLint("ResourceType")
     @Override
@@ -38,64 +38,38 @@ public class RegisterAccount extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_account);
 
-        email = findViewById(R.id.editEmailAddress);
-        password = findViewById(R.id.editPassword);
-        firstName = findViewById(R.id.editFirstName);
-        lastName = findViewById(R.id.editLastName);
+        emailField = findViewById(R.id.editEmailAddress);
+        passwordField = findViewById(R.id.editPassword);
+        firstNameField = findViewById(R.id.editFirstName);
+        lastNameField = findViewById(R.id.editLastName);
         register = findViewById(R.id.register);
         DB = new DatabaseHelper(this);
-        viewingEye = findViewById(R.id.view_password_eye);
-        card1 = findViewById(R.id.card1);
-        card2 = findViewById(R.id.card2);
-        card3 = findViewById(R.id.card3);
-        card4 = findViewById(R.id.card4);
+        viewPasswordEye = findViewById(R.id.view_password_eye);
+        checkbox1 = findViewById(R.id.card1);
+        checkbox2 = findViewById(R.id.card2);
+        checkbox3 = findViewById(R.id.card3);
+        checkbox4 = findViewById(R.id.card4);
         register.setBackgroundColor(Color.parseColor(getString(R.color.myGrey)));
 
-        viewingEye.setOnClickListener(new View.OnClickListener() {
+        viewPasswordEye.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (password.getTransformationMethod().getClass().getSimpleName() .equals("PasswordTransformationMethod")) {
-                    password.setTransformationMethod(new SingleLineTransformationMethod());
-                }
-                else {
-                    password.setTransformationMethod(new PasswordTransformationMethod());
-                }
-
-                password.setSelection(password.getText().length());
+                setViewingEye();
             }
         });
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String user_email = email.getText().toString();
-                String user_pass = password.getText().toString();
-                String userFirstName = firstName.getText().toString();
-                String userLastName = lastName.getText().toString();
-
-                    if (user_email.isEmpty() || user_pass.isEmpty()){
-                        Toast.makeText(RegisterAccount.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Boolean checkForDupeEmail = DB.checkEmail(user_email);
-                        if (!checkForDupeEmail) {
-                            Boolean insert = DB.insertData(user_email, user_pass, userFirstName, userLastName);
-                            if (insert && passwordValidate()) {
-                                Toast.makeText(RegisterAccount.this, "Registration complete!", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(), SignIn.class);
-                                startActivity(intent);
-                            }
-                            else {
-                                Toast.makeText(RegisterAccount.this, "Registration failed", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        else {
-                            Toast.makeText(RegisterAccount.this, "User already exists! Please sign in or use another email.", Toast.LENGTH_SHORT).show();
-                        }
+                String userEmail = emailField.getText().toString();
+                String userPassword = passwordField.getText().toString();
+                String userFirstName = firstNameField.getText().toString();
+                String userLastName = lastNameField.getText().toString();
+                Boolean validUser = isValidUser(userEmail, userPassword);
+                if (validUser) {
+                    registerAccountInDatabase(userEmail, userPassword, userFirstName, userLastName);
                 }
-                }
-
+            }
         });
 
         View backToSignIn = findViewById(R.id.back_to_sign_in);
@@ -108,92 +82,132 @@ public class RegisterAccount extends AppCompatActivity {
                     }
                 }
         );
-
         inputChanged();
     }
 
-    @SuppressLint("ResourceType")
-    public Boolean passwordValidate(){
-
-        String passwordStr = password.getText().toString();
-
-        // 8 character
-        boolean is8char = false;
-        if (password.length()>= 8) {
-            is8char = true;
-            card1.setCardBackgroundColor(Color.parseColor(getString((R.color.myBlue))));
+    public void setViewingEye() {
+        if (passwordField.getTransformationMethod().getClass().getSimpleName() .equals("PasswordTransformationMethod")) {
+            passwordField.setTransformationMethod(new SingleLineTransformationMethod());
         }
         else {
-            //Toast.makeText(RegisterAccount.this, "Password must be at least 8 characters long.", Toast.LENGTH_SHORT).show();
-            card1.setCardBackgroundColor(Color.parseColor(getString(R.color.myGrey)));
+            passwordField.setTransformationMethod(new PasswordTransformationMethod());
         }
+        passwordField.setSelection(passwordField.getText().length());
+    }
 
-
-        //number!
-        boolean hasNum = false;
-        if (passwordStr.matches("(.*[0-9].*)")) {
-            hasNum = true;
-            card2.setCardBackgroundColor(Color.parseColor(getString(R.color.myBlue)));
+    public Boolean isValidUser(String userEmail, String userPassword) {
+        if(!isUserPasswordEmpty(userEmail, userPassword)) {
+            Boolean checkForDupeEmail = DB.checkEmail(userEmail);
+            if (checkForDupeEmail) {
+                Toast.makeText(RegisterAccount.this, "User already exists! Please sign in or use another email.", Toast.LENGTH_SHORT).show();
+                return false;
+            }
         }
-        else {
-            //Toast.makeText(RegisterAccount.this, "Password must have at least 1 number.", Toast.LENGTH_SHORT).show();
-            card2.setCardBackgroundColor(Color.parseColor(getString(R.color.myGrey)));
-        }
+        return true;
+    }
 
-
-        //upper case
-        boolean hasUpper = false;
-        if (passwordStr.matches("(.*[A-Z].*)")) {
-            hasUpper = true;
-            card3.setCardBackgroundColor(Color.parseColor(getString(R.color.myBlue)));
-        }
-        else {
-            //Toast.makeText(RegisterAccount.this, "Password must have at least 1 upper case letter.", Toast.LENGTH_SHORT).show();
-           card3.setCardBackgroundColor(Color.parseColor(getString(R.color.myGrey)));
-        }
-
-
-        //symbol
-        boolean hasSpecialSymbol = false;
-        if (passwordStr.matches("^(?=.*[_.()$&@]).*$")) {
-            hasSpecialSymbol = true;
-            card4.setCardBackgroundColor(Color.parseColor(getString(R.color.myBlue)));
+    public void registerAccountInDatabase(String userEmail, String userPassword, String userFirstName, String userLastName){
+        Boolean insertSuccessful = DB.insertData(userEmail, userPassword, userFirstName, userLastName);
+        if (insertSuccessful && isValidPassword()) {
+            Toast.makeText(RegisterAccount.this, "Registration complete!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), SignIn.class);
+            startActivity(intent);
         }
         else {
-            //Toast.makeText(RegisterAccount.this, "Password must contain at least 1 special character.", Toast.LENGTH_SHORT).show();
-            card4.setCardBackgroundColor(Color.parseColor(getString(R.color.myGrey)));
+            Toast.makeText(RegisterAccount.this, "Registration failed", Toast.LENGTH_SHORT).show();
         }
+    }
 
-
-        return is8char && hasNum && hasUpper && hasSpecialSymbol;
-
-
+    public Boolean isUserPasswordEmpty(String userEmail, String userPassword) {
+        if (userEmail.isEmpty() || userPassword.isEmpty()) {
+            Toast.makeText(RegisterAccount.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return false;
     }
 
     @SuppressLint("ResourceType")
+    public Boolean isValidPassword(){
+        String passwordStr = passwordField.getText().toString();
+        return (isMinimumLength(passwordStr)
+                && hasNumber(passwordStr)
+                && hasUppercase(passwordStr)
+                && hasSpecialSymbol(passwordStr));
+    }
+
+    public Boolean isMinimumLength(String passwordStr){
+        if (passwordStr.length()>= 8) {
+            setCheckboxColor(checkbox1, true);
+            return true;
+        }
+        else {
+            setCheckboxColor(checkbox1, false);
+            return false;
+        }
+    }
+
+    public Boolean hasNumber(String passwordStr){
+        if (passwordStr.matches("(.*[0-9].*)")) {
+            setCheckboxColor(checkbox2, true);
+            return true;
+        }
+        else {
+            setCheckboxColor(checkbox2, false);
+            return false;
+        }
+    }
+
+    public Boolean hasUppercase(String passwordStr) {
+        if (passwordStr.matches("(.*[A-Z].*)")) {
+            setCheckboxColor(checkbox3, true);
+            return true;
+        }
+        else {
+            setCheckboxColor(checkbox3, false);
+            return false;
+        }
+    }
+
+    public Boolean hasSpecialSymbol(String passwordStr) {
+        if (passwordStr.matches("^(?=.*[_.()$&@]).*$")) {
+            setCheckboxColor(checkbox4, true);
+            return true;
+        }
+        else {
+            setCheckboxColor(checkbox4, false);
+            return false;
+        }
+    }
+
+    @SuppressLint("ResourceType")
+    public void setCheckboxColor(CardView checkbox, Boolean passwordRequirementFulfilled) {
+        if (passwordRequirementFulfilled) {
+            checkbox.setCardBackgroundColor(Color.parseColor(getString(R.color.myBlue)));
+        }
+        else {
+            checkbox.setCardBackgroundColor(Color.parseColor(getString(R.color.myGrey)));
+        }
+    }
+    @SuppressLint("ResourceType")
     private void inputChanged(){
-        password.addTextChangedListener(new TextWatcher() {
+        passwordField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
-
+            //will constantly update the register button as the password is typed
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                passwordValidate();
-                if (passwordValidate()) {
+                if (isValidPassword()) {
                     register.setBackgroundColor(Color.parseColor(getString(R.color.myBlue)));
                 }
                 else {
                     register.setBackgroundColor(Color.parseColor(getString(R.color.myGrey)));
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
             }
-//
         });
-//
     }
 
 }
