@@ -42,11 +42,6 @@ public class ProfilePage extends AppCompatActivity {
             assignCourseVariables(extras);
         }
 
-        //to enroll in course through database
-        if (addedCoursesIDs != null) {
-            enrollThroughDatabase();
-        }
-
         //text for course list when no courses are selected
         if (addedCourses == null) {
             String noCoursesYet = "No courses yet";
@@ -115,12 +110,6 @@ public class ProfilePage extends AppCompatActivity {
         addedCoursesIDs = extras.getStringArrayList("courseID_list");
         removedCourses = extras.getStringArrayList("removed_course_list");
         removedCoursesIDs = extras.getStringArrayList("removed_course_ids");
-    }
-
-    public void enrollThroughDatabase() {
-        LinkedHashSet<String> uniqueCourseIDSet = new LinkedHashSet<String>(addedCoursesIDs);
-        ArrayList<String> uniqueCourseIDs = new ArrayList<String>(uniqueCourseIDSet);
-        DB.insertEnrollment(currentUserEmail, uniqueCourseIDs);
     }
 
     public void setCourseList() {

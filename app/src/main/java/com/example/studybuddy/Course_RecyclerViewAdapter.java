@@ -1,10 +1,5 @@
 package com.example.studybuddy;
 
-import static com.example.studybuddy.SearchForClasses.getAddedCourses;
-import static com.example.studybuddy.SearchForClasses.getRemovedCourses;
-import static com.example.studybuddy.SearchForClasses.removedCoursesIDStrings;
-
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,22 +10,21 @@ import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Course_RecyclerViewAdapter extends RecyclerView.Adapter<Course_RecyclerViewAdapter.MyViewHolder> {
-    Context context;
-    ArrayList<CourseModel> courseModels;
-    static String currentUserEmail;
-    static ArrayList<String> addedCoursesStrings = new ArrayList<>();
-    static ArrayList<String> addedCoursesIDs = new ArrayList<>();
-    public static DatabaseHelper databaseHelper;
+    private final Context context;
+    private final ArrayList<CourseModel> courseModels;
+    private final String currentUserEmail;
+    private final DatabaseHelper databaseHelper;
+    private final OnCourseToggleListener listener;
 
-    public Course_RecyclerViewAdapter(Context context, ArrayList<CourseModel> courseModels, String userEmail) {
+    public Course_RecyclerViewAdapter(Context context, ArrayList<CourseModel> courseModels, String currentUserEmail, OnCourseToggleListener listener) {
         this.context = context;
         this.courseModels = courseModels;
-        Course_RecyclerViewAdapter.currentUserEmail = userEmail;
-        databaseHelper = new DatabaseHelper(context);
+        this.currentUserEmail = currentUserEmail;
+        this.databaseHelper = new DatabaseHelper(context);
+        this.listener = listener;
     }
 
     @NonNull
@@ -40,20 +34,20 @@ public class Course_RecyclerViewAdapter extends RecyclerView.Adapter<Course_Recy
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.recycler_view_row, parent, false);
 
-        return new MyViewHolder(view);
+        return new MyViewHolder(view, listener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         //assigning values to each of our views as they come back on the screen
         //based on the position of the recycler view
-
+        CourseModel course = courseModels.get(position); //gets position of course
+        //gets status of enrollment in current course
+        boolean isEnrolled = databaseHelper.checkEnrollment(currentUserEmail, course.getCourseID());
+        //adds course if enrolled
+        holder.bind(course, isEnrolled);
         holder.tvName.setText(courseModels.get(position).getCourseName());
         holder.tvID.setText(courseModels.get(position).getCourseID());
-
-        if (databaseHelper.checkEnrollment(currentUserEmail, courseModels.get(position).getCourseID())){
-            holder.addCourse.setChecked(true);
-        }
     }
 
     @Override
@@ -62,60 +56,36 @@ public class Course_RecyclerViewAdapter extends RecyclerView.Adapter<Course_Recy
         return courseModels.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         //grabbing views from recycler_view_row layout file
         //kind of like the onCreate method
-
-        public ArrayList<CourseModel> courseModelsTest = new ArrayList<>();
         TextView tvName, tvID;
         ToggleButton addCourse;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, OnCourseToggleListener listener) {
             super(itemView);
-
             tvName = itemView.findViewById(R.id.course_name);
             tvID = itemView.findViewById(R.id.course_id);
             addCourse = itemView.findViewById(R.id.toggleButton);
 
-            itemView.setOnClickListener(this);
-            addCourse.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String fullCourseString = tvID.getText().toString() + " " + tvName.getText().toString();
-                    String courseID = tvID.getText().toString();
-                    DatabaseHelper databaseHelper1 = new DatabaseHelper(itemView.getContext());
+            addCourse.setOnClickListener(v -> {
+                String courseID = tvID.getText().toString();
+                String courseName = tvName.getText().toString();
+                boolean isChecked = addCourse.isChecked();
 
-                    ArrayList<String> removedCourses = new ArrayList<>();
-                    ArrayList<String> removedCourseIDs = new ArrayList<>();
-
-                    //removes enrollment
-                    if (databaseHelper.checkEnrollment(Course_RecyclerViewAdapter.currentUserEmail, courseID)){
-                        databaseHelper.removeEnrollment(Course_RecyclerViewAdapter.currentUserEmail, courseID);
-                        addedCoursesStrings.remove(fullCourseString);
-                        addedCoursesIDs.remove(courseID);
-                        addCourse.setChecked(false);
-
-                        removedCourses.add(fullCourseString);
-                        removedCourseIDs.add(courseID);
-                    }
-                    //adds enrollment
-                    else {
-                        addedCoursesStrings.add(fullCourseString);
-                        addedCoursesIDs.add(courseID);
-                        addCourse.setChecked(true);
-                    }
-
-                    getAddedCourses(addedCoursesStrings, addedCoursesIDs);
-                    getRemovedCourses(removedCourses, removedCourseIDs);
-                }
+                //delegates to listener
+                listener.onCourseToggled(courseID, courseName, isChecked);
             });
-
         }
 
-        @Override
-        public void onClick(View v) {
-
+        public void bind(CourseModel model, boolean isEnrolled) {
+            tvName.setText(model.getCourseName());
+            tvID.setText(model.getCourseID());
+            addCourse.setChecked(isEnrolled);
         }
     }
 
+    public interface OnCourseToggleListener {
+        void onCourseToggled(String courseId, String courseName, boolean isEnrolled);
+    }
 }

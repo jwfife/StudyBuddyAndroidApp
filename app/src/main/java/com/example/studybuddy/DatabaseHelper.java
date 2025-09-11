@@ -5,7 +5,6 @@ import android.database.Cursor;
 
 import android.database.sqlite.*;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,19 +13,12 @@ public class DatabaseHelper extends  SQLiteOpenHelper{
 
     public static final String DBNAME = "Login.db";
 
-    // Emulator Database Path = /data/data/com.example.studybuddy/databases/Login.db
-    // Local database path = "C:\Users\jwf12\OneDrive\Desktop\Databases\Login.db"
-    private String currentUserFirstName;
-    private String currentUserLastName;
-
-
     //course ID, course title
     public HashMap<String, String> courses = new HashMap<>();
 
     public DatabaseHelper(Context context) {
         super(context, "Login.db", null, 1);
     }
-
 
     @Override
     public void onCreate(SQLiteDatabase MyDB) {
@@ -56,17 +48,14 @@ public class DatabaseHelper extends  SQLiteOpenHelper{
         MyDB.close();
     }
 
-    public void insertEnrollment(String currentUserEmail, ArrayList<String> courseID){
+    public void insertEnrollment(String currentUserEmail, String courseID){ //why do i need an arraylist here? why not use strings like in removeEnrollment?
         SQLiteDatabase MyDB = this.getWritableDatabase();
-        for (int i = 0; i < courseID.size(); i++){
-            if (!checkEnrollment(currentUserEmail, courseID.get(i))){
-                ContentValues contentValues = new ContentValues();
-                contentValues.put("user_email", currentUserEmail);
-                contentValues.put("course_id", courseID.get(i));
-                MyDB.insert("enrolled", null, contentValues);
-            }
-        }
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("user_email", currentUserEmail);
+        contentValues.put("course_id", courseID);
+        MyDB.insert("enrolled", null, contentValues);
         MyDB.close();
+        //return true; make return type boolean for debugging only
     }
 
     public void removeEnrollment(String currentUserEmail, String courseIDToRemove){
@@ -74,6 +63,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper{
         MyDB.delete("enrolled", "user_email = ? and course_id = ?",
                 new String[] {currentUserEmail, courseIDToRemove} );
         MyDB.close();
+        //return true; make return type boolean for debugging only
     }
 
     public Boolean checkEnrollment(String currentUserEmail, String courseID) {
@@ -128,7 +118,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper{
         Cursor cursor = MyDB.rawQuery("Select * from users where email = ?", new String[] {email});
         cursor.moveToFirst();
         int indexOfColumn = cursor.getColumnIndexOrThrow("firstname");
-        currentUserFirstName = cursor.getString(indexOfColumn);
+        String currentUserFirstName = cursor.getString(indexOfColumn);
         
         return currentUserFirstName;
     }
@@ -138,7 +128,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper{
         Cursor cursor = MyDB.rawQuery("Select * from users where email = ?", new String[] {email});
         cursor.moveToFirst();
         int indexOfColumn = cursor.getColumnIndexOrThrow("lastname");
-        currentUserLastName = cursor.getString(indexOfColumn);
+        String currentUserLastName = cursor.getString(indexOfColumn);
 
         return currentUserLastName;
     }
