@@ -54,17 +54,6 @@ public class SignIn extends AppCompatActivity {
             }
         });
 
-        View continueAsGuest = findViewById(R.id.continue_as_guest);
-        continueAsGuest.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = new Intent(SignIn.this, ActionSelection.class);
-                        startActivity(i);
-                    }
-                }
-        );
-
         View signUp = findViewById(R.id.sign_up_register);
         signUp.setOnClickListener(
                 new View.OnClickListener() {

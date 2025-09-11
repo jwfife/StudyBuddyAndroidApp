@@ -2,6 +2,7 @@ package com.example.studybuddy;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,10 +12,10 @@ import java.util.ArrayList;
 public class SearchForClasses extends AppCompatActivity {
     String currentUserEmail = "";
     ArrayList<CourseModel> courseModels = new ArrayList<>();
-    static ArrayList<String> addedCoursesStrings = new ArrayList<>();
-    static ArrayList<String> addedCoursesIDStrings = new ArrayList<>();
-    static ArrayList<String> removedCoursesStrings = new ArrayList<>();
-    static ArrayList<String> removedCoursesIDStrings = new ArrayList<>();
+    ArrayList<String> addedCoursesStrings = new ArrayList<>();
+    ArrayList<String> addedCoursesIDStrings = new ArrayList<>();
+    ArrayList<String> removedCoursesStrings = new ArrayList<>();
+    ArrayList<String> removedCoursesIDStrings = new ArrayList<>();
     DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
     @Override
@@ -31,8 +32,38 @@ public class SearchForClasses extends AppCompatActivity {
             currentUserEmail = extras.getString("key");
         }
 
-        Course_RecyclerViewAdapter adapter = new Course_RecyclerViewAdapter(this,
-                courseModels, currentUserEmail);
+        Course_RecyclerViewAdapter adapter = new Course_RecyclerViewAdapter(
+                this,
+                courseModels,
+                currentUserEmail,
+                new Course_RecyclerViewAdapter.OnCourseToggleListener() {
+                    @Override
+                    public void onCourseToggled(String courseID, String courseName, boolean isEnrolled) {
+                        String fullCourseString = courseID + " " + courseName;
+                        try (DatabaseHelper db = new DatabaseHelper(getApplicationContext())) {
+                            if (isEnrolled) {
+                                db.insertEnrollment(currentUserEmail, courseID);
+                                addedCoursesIDStrings.add(courseID);
+                                addedCoursesStrings.add(fullCourseString);
+
+                                /* Debugging:
+                                Assign a boolean to the db.insertEnrollment
+                                Log.d("DB_DEBUG", "Enrolled: " + courseID + " | Success: " + boolean);
+                                 */
+                            }
+                            else {
+                                db.removeEnrollment(currentUserEmail, courseID);
+                                removedCoursesIDStrings.add(courseID);
+                                removedCoursesStrings.add(fullCourseString);
+
+                                /* Debugging:
+                                Assign a boolean to the db.removeEnrollment
+                                Log.d("DB_DEBUG", "Unenrolled: " + courseID + " | Success: " + boolean);
+                                 */
+                            }
+                        }
+                    }
+                });
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -93,14 +124,16 @@ public class SearchForClasses extends AppCompatActivity {
         databaseHelper.insertCourses(courseModels);
     }
 
-    public static void getAddedCourses(ArrayList<String> addedCourses, ArrayList<String> addedCoursesIDs) {
-        addedCoursesStrings.addAll(addedCourses);
-        addedCoursesIDStrings.addAll(addedCoursesIDs);
-    }
 
-    public static void getRemovedCourses(ArrayList<String> removedCourses, ArrayList<String> removedCoursesIDs) {
-        removedCoursesStrings.addAll(removedCourses);
-        removedCoursesIDStrings.addAll(removedCoursesIDs);
-    }
+    //these might be necessary for adding the list of enrolled courses to the profile page
+//    public void getAddedCourses(ArrayList<String> addedCourses, ArrayList<String> addedCoursesIDs) {
+//        addedCoursesStrings.addAll(addedCourses);
+//        addedCoursesIDStrings.addAll(addedCoursesIDs);
+//    }
+//
+//    public void getRemovedCourses(ArrayList<String> removedCourses, ArrayList<String> removedCoursesIDs) {
+//        removedCoursesStrings.addAll(removedCourses);
+//        removedCoursesIDStrings.addAll(removedCoursesIDs);
+//    }
 
 }
