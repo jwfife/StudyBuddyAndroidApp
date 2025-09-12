@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" >
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -29,7 +30,7 @@
             android:value="YOUR_API_KEY" />
 
         <activity
-            android:name=".EditProfile"
+            android:name=".ui.profile.EditProfile"
             android:exported="false"
             android:label="@string/title_activity_edit_profile"
             android:theme="@style/Theme.FinalProject" />
@@ -38,20 +39,20 @@
             android:exported="false"
             android:label="@string/title_activity_bottom_nav_test" />
         <activity
-            android:name=".RegisterAccount"
+            android:name=".ui.auth.RegisterAccount"
             android:exported="false" />
         <activity
             android:name=".ui.login.LoginOrRegister"
             android:exported="false"
             android:label="@string/title_activity_login_or_register" />
         <activity
-            android:name=".MessagesPage"
+            android:name=".ui.messaging.MessagesPage"
             android:exported="false" />
         <activity
-            android:name=".ProfilePage"
+            android:name=".ui.profile.ProfilePage"
             android:exported="false" />
         <activity
-            android:name=".SearchForClasses"
+            android:name=".ui.courses.SearchForClasses"
             android:exported="false"
             android:theme="@style/Theme.FinalProject" >
             <intent-filter>
@@ -63,10 +64,10 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity
-            android:name=".ActionSelection"
+            android:name=".ui.courses.ActionSelection"
             android:exported="false" />
         <activity
-            android:name=".SignIn"
+            android:name=".ui.auth.SignIn"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

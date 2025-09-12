@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.*;
 
 import com.example.studybuddy.models.CourseModel;
+import com.example.studybuddy.ui.profile.ProfilePage;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper{
         MyDB.execSQL("create Table enrolled (id INTEGER primary key AUTOINCREMENT, user_email TEXT, course_id TEXT)");
     }
 
+
     public void insertCourses(ArrayList<CourseModel> courseModels){
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -60,14 +62,14 @@ public class DatabaseHelper extends  SQLiteOpenHelper{
         MyDB.close();
     }
 
-    public void insertEnrollment(String currentUserEmail, String courseID){ //why do i need an arraylist here? why not use strings like in removeEnrollment?
+    public void insertEnrollment(String currentUserEmail, String courseID){
         SQLiteDatabase MyDB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("user_email", currentUserEmail);
         contentValues.put("course_id", courseID);
         MyDB.insert("enrolled", null, contentValues);
         MyDB.close();
-        //return true; make return type boolean for debugging only
+        //return true; make return type boolean <- for debugging only
     }
 
     public void removeEnrollment(String currentUserEmail, String courseIDToRemove){
@@ -112,7 +114,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper{
         return courses;
     }
 
-    public String getCourseTitles(String courseID) {
+    public String getCourseTitle(String courseID) {
         SQLiteDatabase MyDB = this.getReadableDatabase();
         String courseTitle = "";
 
@@ -140,14 +142,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper{
         SQLiteDatabase MyDB = this.getWritableDatabase();
         Cursor cursor = MyDB.rawQuery("Select * from courses where id = ?", new String[] {courseID});
         return cursor.getCount() > 0;
-    }
-
-    //just added 9/3
-    public String getCourseTitle(String courseID){
-        SQLiteDatabase MyDB = this.getWritableDatabase();
-        String courseTitle = "";
-        courseTitle = MyDB.rawQuery("Select * from courses where id = ?", new String[] {courseID}).toString();
-        return courseTitle;
     }
 
     @Override
