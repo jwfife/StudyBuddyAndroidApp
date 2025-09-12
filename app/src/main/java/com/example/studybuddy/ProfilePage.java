@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 
 public class ProfilePage extends AppCompatActivity {
 
@@ -18,12 +19,6 @@ public class ProfilePage extends AppCompatActivity {
     String currentUserFirst = "";
     String currentUserLast = "";
     String courseListStr = "";
-
-    ArrayList<String> addedCourses = new ArrayList<>();
-    ArrayList<String> addedCoursesIDs = new ArrayList<>();
-    ArrayList<String> updatedCourseList = new ArrayList<>();
-    ArrayList<String> removedCourses = new ArrayList<>();
-    ArrayList<String> removedCoursesIDs = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,17 +34,10 @@ public class ProfilePage extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             assignUserVariables(extras);
-            assignCourseVariables(extras);
         }
 
-        //text for course list when no courses are selected
-        if (addedCourses == null) {
-            String noCoursesYet = "No courses yet";
-            courseList.setText(noCoursesYet);
-        }
-        else {
-            setCourseList();
-        }
+        //sets the user's enrolled course list
+        setCourseList();
 
         View viewMessages = findViewById(R.id.messagesPage);
         viewMessages.setOnClickListener(
@@ -78,8 +66,6 @@ public class ProfilePage extends AppCompatActivity {
         View goToHomePage = findViewById(R.id.homePageButton);
         Bundle extrasToHome = new Bundle();
         extrasToHome.putString("key", currentUserEmail);
-        extrasToHome.putStringArrayList("course_list", updatedCourseList);
-        extrasToHome.putStringArrayList("courseID_list", addedCoursesIDs);
         goToHomePage.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -105,41 +91,62 @@ public class ProfilePage extends AppCompatActivity {
         }
     }
 
-    public void assignCourseVariables(Bundle extras) {
-        addedCourses = extras.getStringArrayList("course_list");
-        addedCoursesIDs = extras.getStringArrayList("courseID_list");
-        removedCourses = extras.getStringArrayList("removed_course_list");
-        removedCoursesIDs = extras.getStringArrayList("removed_course_ids");
-    }
-
     public void setCourseList() {
-        LinkedHashSet<String> uniqueCourseList = new LinkedHashSet<String>(addedCourses);
-        updatedCourseList.addAll(uniqueCourseList);
-
-        if (removedCourses != null) {
-            updatedCourseList = removeCoursesFromSavedList(updatedCourseList, removedCourses);
+        //text for course list when no courses are selected
+        if (DB.getEnrolledCourse(currentUserEmail) == null) {
+            String noCoursesYet = "No courses yet";
+            courseList.setText(noCoursesYet);
         }
+        else {
+            List<String> courseStrArray = getFullCourseStrings();
 
-        StringBuilder strBuilder = new StringBuilder(courseListStr);
-        //adds newline character to each course if necessary
-        for (int k = 0; k < updatedCourseList.size(); k++) {
-            String courseString = setNewline(updatedCourseList, k);
-            updatedCourseList.set(k, courseString);
-            strBuilder.append(updatedCourseList.get(k));
+            if (courseStrArray.isEmpty()) {
+                String noCoursesYet = "No courses yet";
+                courseList.setText(noCoursesYet);
+            }
+            else {
+                StringBuilder strBuilder = new StringBuilder(courseListStr);
+                //adds newline character to each course if necessary
+                for (int k = 0; k < courseStrArray.size(); k++) {
+                    String courseString = setNewline(courseStrArray, k);
+                    courseStrArray.set(k, courseString);
+                    strBuilder.append(courseStrArray.get(k));
+                }
+
+                String finalCourseList = strBuilder.toString();
+                courseList.setText(finalCourseList);
+            }
         }
-
-        String finalCourseList = strBuilder.toString();
-        courseList.setText(finalCourseList);
     }
 
-    public ArrayList<String> removeCoursesFromSavedList(ArrayList<String> updatedCourseList, ArrayList<String> removedCourses) {
-        for (int i = 0; i < removedCourses.size(); i++) {
-            updatedCourseList.remove(removedCourses.get(i));
+    public List<String> getFullCourseStrings() {
+        List<String> fullCourseStrings = new ArrayList<>();
+
+        try (DatabaseHelper db = new DatabaseHelper(getApplicationContext())) {
+            //these should be the same size
+            List<String> enrolledCourseIDs = db.getEnrolledCourse(currentUserEmail);
+            List<String> enrolledCourseTitles = new ArrayList<>();
+
+            //grabs the course title for each course id
+            for (String id : enrolledCourseIDs
+                 ) {
+                enrolledCourseTitles.add(db.getCourseTitles(id));
+            }
+
+            if (!enrolledCourseIDs.isEmpty()) {
+                for (int i = 0; i < enrolledCourseIDs.size(); i++) {
+                    String fullCourseString = enrolledCourseIDs.get(i) +
+                            " " + enrolledCourseTitles.get(i);
+
+                    fullCourseStrings.add(fullCourseString);
+                }
+            }
         }
-        return updatedCourseList;
+
+        return fullCourseStrings;
     }
 
-    public String setNewline(ArrayList<String> updatedCourseList, int index) {
+    public String setNewline(List<String> updatedCourseList, int index) {
         String courseString;
         if (!hasNewline(updatedCourseList, index)) {
             courseString = updatedCourseList.get(index) + " \n";
@@ -150,7 +157,7 @@ public class ProfilePage extends AppCompatActivity {
         return courseString;
     }
 
-    public boolean hasNewline(ArrayList<String> updatedCourseList, int index) {
+    public boolean hasNewline(List<String> updatedCourseList, int index) {
         return updatedCourseList.get(index).contains("\n");
     }
 }
