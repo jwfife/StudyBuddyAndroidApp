@@ -41,7 +41,7 @@ public class ProfilePage extends AppCompatActivity {
 
         DatabaseHelper DB = DatabaseHelper.getInstance(this);
         userRepository = new DatabaseUserRepository(DB);
-        courseRepository = new DatabaseCourseRepository(DB);
+        courseRepository = new DatabaseCourseRepository(DB, this);
 
         //retrieves the logged in user's email from the passed intent
         Bundle extras = getIntent().getExtras();

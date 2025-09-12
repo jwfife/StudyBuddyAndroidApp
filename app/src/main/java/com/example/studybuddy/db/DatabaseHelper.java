@@ -41,7 +41,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper{
     }
 
 
-    public void insertCourses(ArrayList<CourseModel> courseModels){
+    public void insertCourses(List<CourseModel> courseModels){
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
         for (int i = 0; i < courseModels.size(); i++) {

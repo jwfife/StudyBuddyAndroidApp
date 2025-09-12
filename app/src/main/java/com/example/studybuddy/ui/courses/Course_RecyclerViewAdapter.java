@@ -15,15 +15,16 @@ import com.example.studybuddy.db.DatabaseHelper;
 import com.example.studybuddy.models.CourseModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Course_RecyclerViewAdapter extends RecyclerView.Adapter<Course_RecyclerViewAdapter.MyViewHolder> {
     private final Context context;
-    private final ArrayList<CourseModel> courseModels;
+    private final List<CourseModel> courseModels;
     private final String currentUserEmail;
     private final DatabaseHelper DB;
     private final OnCourseToggleListener listener;
 
-    public Course_RecyclerViewAdapter(Context context, ArrayList<CourseModel> courseModels, String currentUserEmail, OnCourseToggleListener listener) {
+    public Course_RecyclerViewAdapter(Context context, List<CourseModel> courseModels, String currentUserEmail, OnCourseToggleListener listener) {
         this.context = context;
         this.courseModels = courseModels;
         this.currentUserEmail = currentUserEmail;
@@ -50,8 +51,6 @@ public class Course_RecyclerViewAdapter extends RecyclerView.Adapter<Course_Recy
         boolean isEnrolled = DB.checkEnrollment(currentUserEmail, course.getCourseID());
         //adds course if enrolled
         holder.bind(course, isEnrolled);
-        holder.tvName.setText(courseModels.get(position).getCourseName());
-        holder.tvID.setText(courseModels.get(position).getCourseID());
     }
 
     @Override
