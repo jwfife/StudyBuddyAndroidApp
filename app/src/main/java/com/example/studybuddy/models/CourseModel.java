@@ -1,4 +1,4 @@
-package com.example.studybuddy;
+package com.example.studybuddy.models;
 
 public class CourseModel {
     String courseName;

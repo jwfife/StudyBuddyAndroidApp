@@ -1,12 +1,18 @@
-package com.example.studybuddy;
+package com.example.studybuddy.ui.courses;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.studybuddy.R;
+import com.example.studybuddy.db.DatabaseHelper;
+import com.example.studybuddy.models.CourseModel;
+import com.example.studybuddy.ui.messaging.MessagesPage;
+import com.example.studybuddy.ui.profile.ProfilePage;
+
 import java.util.ArrayList;
 
 public class SearchForClasses extends AppCompatActivity {
@@ -16,12 +22,13 @@ public class SearchForClasses extends AppCompatActivity {
     ArrayList<String> addedCoursesIDStrings = new ArrayList<>();
     ArrayList<String> removedCoursesStrings = new ArrayList<>();
     ArrayList<String> removedCoursesIDStrings = new ArrayList<>();
-    DatabaseHelper databaseHelper = new DatabaseHelper(this);
+    private DatabaseHelper DB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_for_classes);
+        DB = DatabaseHelper.getInstance(this);
 
         RecyclerView recyclerView = findViewById(R.id.mRecyclerView);
 
@@ -40,28 +47,28 @@ public class SearchForClasses extends AppCompatActivity {
                     @Override
                     public void onCourseToggled(String courseID, String courseName, boolean isEnrolled) {
                         String fullCourseString = courseID + " " + courseName;
-                        try (DatabaseHelper db = new DatabaseHelper(getApplicationContext())) {
-                            if (isEnrolled) {
-                                db.insertEnrollment(currentUserEmail, courseID);
-                                addedCoursesIDStrings.add(courseID);
-                                addedCoursesStrings.add(fullCourseString);
 
-                                /* Debugging:
-                                Assign a boolean to the db.insertEnrollment
-                                Log.d("DB_DEBUG", "Enrolled: " + courseID + " | Success: " + boolean);
-                                 */
-                            }
-                            else {
-                                db.removeEnrollment(currentUserEmail, courseID);
-                                removedCoursesIDStrings.add(courseID);
-                                removedCoursesStrings.add(fullCourseString);
+                        if (isEnrolled) {
+                            DB.insertEnrollment(currentUserEmail, courseID);
+                            addedCoursesIDStrings.add(courseID);
+                            addedCoursesStrings.add(fullCourseString);
 
-                                /* Debugging:
-                                Assign a boolean to the db.removeEnrollment
-                                Log.d("DB_DEBUG", "Unenrolled: " + courseID + " | Success: " + boolean);
-                                 */
-                            }
+                            /* Debugging:
+                            Assign a boolean to the db.insertEnrollment
+                            Log.d("DB_DEBUG", "Enrolled: " + courseID + " | Success: " + boolean);
+                             */
                         }
+                        else {
+                            DB.removeEnrollment(currentUserEmail, courseID);
+                            removedCoursesIDStrings.add(courseID);
+                            removedCoursesStrings.add(fullCourseString);
+
+                            /* Debugging:
+                            Assign a boolean to the db.removeEnrollment
+                            Log.d("DB_DEBUG", "Unenrolled: " + courseID + " | Success: " + boolean);
+                             */
+                        }
+
                     }
                 });
         recyclerView.setAdapter(adapter);
@@ -121,7 +128,7 @@ public class SearchForClasses extends AppCompatActivity {
             courseModels.add(new CourseModel(courseNames[i],
                     courseIDs[i]));
         }
-        databaseHelper.insertCourses(courseModels);
+        DB.insertCourses(courseModels);
     }
 
 

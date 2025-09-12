@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/sign_in_gradient"
-    tools:context=".ProfilePage">
+    tools:context=".ui.profile.ProfilePage">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:context=".ActionSelection">
+        tools:context=".ui.courses.ActionSelection">
 
         <LinearLayout
             android:id="@+id/bottom_linear_layout"

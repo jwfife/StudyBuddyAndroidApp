@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/sign_in_gradient"
-    tools:context=".RegisterAccount">
+    tools:context=".ui.auth.RegisterAccount">
 
     <TextView
         android:layout_width="match_parent"

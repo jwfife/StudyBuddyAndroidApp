@@ -52,6 +52,7 @@
     <string name="apply_button">Apply Changes</string>
     <string name="my_courses">My Courses</string>
     <string name="find_courses">Find Courses</string>
+    <string name="error">Error</string>
 
     <string-array name="compsci_courses_names">
         <item>Basics of Computer Science</item>
