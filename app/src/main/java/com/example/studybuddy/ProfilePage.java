@@ -2,6 +2,7 @@ package com.example.studybuddy;
 
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -14,7 +15,7 @@ import java.util.List;
 public class ProfilePage extends AppCompatActivity {
 
     TextView firstName, lastName, courseList;
-    DatabaseHelper DB;
+    private DatabaseHelper DB;
     String currentUserEmail = "";
     String currentUserFirst = "";
     String currentUserLast = "";
@@ -27,7 +28,7 @@ public class ProfilePage extends AppCompatActivity {
 
         firstName = findViewById(R.id.firstName);
         lastName = findViewById(R.id.lastName);
-        DB = new DatabaseHelper(this);
+        DB = DatabaseHelper.getInstance(this);
         courseList = findViewById(R.id.course_list_array);
 
         //retrieves the logged in user's email from the passed intent
@@ -121,28 +122,23 @@ public class ProfilePage extends AppCompatActivity {
 
     public List<String> getFullCourseStrings() {
         List<String> fullCourseStrings = new ArrayList<>();
+        List<String> enrolledCourseIDs = DB.getEnrolledCourse(currentUserEmail);
+        List<String> enrolledCourseTitles = new ArrayList<>();
 
-        try (DatabaseHelper db = new DatabaseHelper(getApplicationContext())) {
-            //these should be the same size
-            List<String> enrolledCourseIDs = db.getEnrolledCourse(currentUserEmail);
-            List<String> enrolledCourseTitles = new ArrayList<>();
+        //grabs the course title for each course id
+        for (String id : enrolledCourseIDs
+        ) {
+            enrolledCourseTitles.add(DB.getCourseTitles(id));
+        }
+        
+        if (!enrolledCourseIDs.isEmpty()) {
+            for (int i = 0; i < enrolledCourseIDs.size(); i++) {
+                String fullCourseString = enrolledCourseIDs.get(i) +
+                        " " + enrolledCourseTitles.get(i);
 
-            //grabs the course title for each course id
-            for (String id : enrolledCourseIDs
-                 ) {
-                enrolledCourseTitles.add(db.getCourseTitles(id));
-            }
-
-            if (!enrolledCourseIDs.isEmpty()) {
-                for (int i = 0; i < enrolledCourseIDs.size(); i++) {
-                    String fullCourseString = enrolledCourseIDs.get(i) +
-                            " " + enrolledCourseTitles.get(i);
-
-                    fullCourseStrings.add(fullCourseString);
-                }
+                fullCourseStrings.add(fullCourseString);
             }
         }
-
         return fullCourseStrings;
     }
 

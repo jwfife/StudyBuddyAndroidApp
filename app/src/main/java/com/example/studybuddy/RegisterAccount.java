@@ -28,7 +28,7 @@ public class RegisterAccount extends AppCompatActivity {
 
     EditText emailField, passwordField, firstNameField, lastNameField;
     Button register;
-    DatabaseHelper DB;
+    private DatabaseHelper DB;
     ImageView viewPasswordEye;
     CardView checkbox1, checkbox2, checkbox3, checkbox4;
 
@@ -43,7 +43,7 @@ public class RegisterAccount extends AppCompatActivity {
         firstNameField = findViewById(R.id.editFirstName);
         lastNameField = findViewById(R.id.editLastName);
         register = findViewById(R.id.register);
-        DB = new DatabaseHelper(this);
+        DB = DatabaseHelper.getInstance(this);
         viewPasswordEye = findViewById(R.id.view_password_eye);
         checkbox1 = findViewById(R.id.card1);
         checkbox2 = findViewById(R.id.card2);

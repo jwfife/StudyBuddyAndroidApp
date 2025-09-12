@@ -12,13 +12,22 @@ import java.util.List;
 
 public class DatabaseHelper extends  SQLiteOpenHelper{
 
-    public static final String DBNAME = "Login.db";
+    private static final String DB_NAME = "Login.db";
+    private static final int DATABASE_VERSION = 1;
+    private static DatabaseHelper instance;
 
     //course ID, course title
     public HashMap<String, String> courses = new HashMap<>();
 
-    public DatabaseHelper(Context context) {
-        super(context, "Login.db", null, 1);
+    private DatabaseHelper(Context context) {
+        super(context, DB_NAME, null, DATABASE_VERSION);
+    }
+
+    public static synchronized DatabaseHelper getInstance(Context context) {
+        if (instance == null) {
+            instance = new DatabaseHelper(context.getApplicationContext());
+        }
+        return instance;
     }
 
     @Override

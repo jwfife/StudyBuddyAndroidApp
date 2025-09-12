@@ -21,7 +21,7 @@ public class SignIn extends AppCompatActivity {
 
     EditText emailField, passwordField;
     Button loginButton;
-    DatabaseHelper DB;
+    private DatabaseHelper DB;
     ImageView viewPasswordEye;
 
     @Override
@@ -32,7 +32,7 @@ public class SignIn extends AppCompatActivity {
         emailField = findViewById(R.id.editEmailAddress);
         passwordField = findViewById(R.id.editPassword);
         loginButton = findViewById(R.id.sign_in);
-        DB = new DatabaseHelper(this);
+        DB = DatabaseHelper.getInstance(this);
         viewPasswordEye = findViewById(R.id.view_password_eye);
 
         viewPasswordEye.setOnClickListener(new View.OnClickListener() {
