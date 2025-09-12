@@ -3,7 +3,6 @@ package com.example.studybuddy.ui.profile;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,17 +18,17 @@ import com.example.studybuddy.ui.messaging.MessagesPage;
 import com.example.studybuddy.util.CourseFormatter;
 
 import java.sql.SQLException;
+import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProfilePage extends AppCompatActivity {
-
+    private static final Logger logger = Logger.getLogger(ProfilePage.class.getName());
     private TextView firstName, lastName, courseList;
     private String currentUserEmail = "";
 
     private UserRepository userRepository;
     private CourseRepository courseRepository;
-    //String courseListStr = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +47,6 @@ public class ProfilePage extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             currentUserEmail = extras.getString("key");
-            //assignUserVariables(extras);
         }
 
         //sets the user's enrolled course list
@@ -57,6 +55,7 @@ public class ProfilePage extends AppCompatActivity {
         setupButtonListeners();
     }
 
+    //displays user's first and last name
     private void displayUserInfo() {
         try {
             String first = userRepository.getFirstName(currentUserEmail);
@@ -64,12 +63,13 @@ public class ProfilePage extends AppCompatActivity {
             firstName.setText(first);
             lastName.setText(last);
         } catch (SQLException e) {
-            e.printStackTrace();
-            firstName.setText("Error");
-            lastName.setText("Error");
+            logger.severe("An error occurred in displayUserInfo: " + e.getMessage());
+            firstName.setText(getString(R.string.error));
+            lastName.setText(getString(R.string.error));
         }
     }
 
+    //displays user's list of enrolled courses (if applicable)
     public void displayCourseList() {
         List<String> courseIDs = courseRepository.getEnrolledCourseIDs(currentUserEmail);
         List<String> courseTitles = new ArrayList<>();
@@ -80,7 +80,6 @@ public class ProfilePage extends AppCompatActivity {
                 courseTitles.add(courseRepository.getCourseTitle(id));
             }
         }
-
         String formattedCourses = CourseFormatter.formatCourses(courseIDs, courseTitles);
         courseList.setText(formattedCourses);
     }
@@ -91,6 +90,7 @@ public class ProfilePage extends AppCompatActivity {
         setupNavigation(R.id.homePageButton, ActionSelection.class);
     }
 
+    //sets up the listener for each activity
     private void setupNavigation(int viewID, Class<?> targetActivity) {
         findViewById(viewID).setOnClickListener(v -> {
             Intent i = new Intent(ProfilePage.this, targetActivity);
