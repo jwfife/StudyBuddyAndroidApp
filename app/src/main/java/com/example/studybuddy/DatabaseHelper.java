@@ -8,6 +8,7 @@ import android.database.sqlite.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class DatabaseHelper extends  SQLiteOpenHelper{
 
@@ -71,6 +72,57 @@ public class DatabaseHelper extends  SQLiteOpenHelper{
         Cursor cursor = MyDB.rawQuery("Select * from enrolled where user_email = ? and " +
                 "course_id = ?", new String[] {currentUserEmail, courseID});
         return cursor.getCount() > 0;
+    }
+
+    public List<String> getEnrolledCourse(String currentUserEmail) {
+        SQLiteDatabase MyDB = this.getReadableDatabase();
+        List<String> courses = new ArrayList<>();
+
+        Cursor cursor = MyDB.query(
+                "enrolled",
+                new String[]{"course_id"},
+                "user_email = ?",
+                new String[]{currentUserEmail},
+                null,
+                null,
+                null
+        );
+
+        //in the case the user is enrolled in 1+ courses
+        if (cursor != null) {
+            //loops through cursor
+            while (cursor.moveToNext()) {
+                String courseId = cursor.getString(
+                        cursor.getColumnIndexOrThrow("course_id"));
+                courses.add(courseId);
+            }
+            cursor.close();
+        }
+        return courses;
+    }
+
+    public String getCourseTitles(String courseID) {
+        SQLiteDatabase MyDB = this.getReadableDatabase();
+        String courseTitle = "";
+
+        Cursor cursor = MyDB.query("courses",
+                new String[]{"title"},
+                "id = ?",
+                new String[]{courseID},
+                null,
+                null,
+                null
+        );
+
+        if (cursor != null) {
+            while(cursor.moveToNext()) {
+                courseTitle = cursor.getString(
+                        cursor.getColumnIndexOrThrow("title"));
+            }
+            cursor.close();
+        }
+
+        return courseTitle;
     }
 
     public Boolean checkCourseID(String courseID){
