@@ -1,9 +1,11 @@
-package com.example.studybuddy;
+package com.example.studybuddy.db;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
 import android.database.sqlite.*;
+
+import com.example.studybuddy.models.CourseModel;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

@@ -1,15 +1,19 @@
-package com.example.studybuddy;
+package com.example.studybuddy.ui.profile;
 
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.studybuddy.ui.courses.ActionSelection;
+import com.example.studybuddy.db.DatabaseHelper;
+import com.example.studybuddy.ui.messaging.MessagesPage;
+import com.example.studybuddy.R;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 public class ProfilePage extends AppCompatActivity {
@@ -130,7 +134,7 @@ public class ProfilePage extends AppCompatActivity {
         ) {
             enrolledCourseTitles.add(DB.getCourseTitles(id));
         }
-        
+
         if (!enrolledCourseIDs.isEmpty()) {
             for (int i = 0; i < enrolledCourseIDs.size(); i++) {
                 String fullCourseString = enrolledCourseIDs.get(i) +

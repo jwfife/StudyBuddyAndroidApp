@@ -1,4 +1,4 @@
-package com.example.studybuddy;
+package com.example.studybuddy.ui.auth;
 
 
 import android.content.Intent;
@@ -12,6 +12,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.studybuddy.ui.courses.ActionSelection;
+import com.example.studybuddy.db.DatabaseHelper;
+import com.example.studybuddy.R;
 
 
 /* TODO:

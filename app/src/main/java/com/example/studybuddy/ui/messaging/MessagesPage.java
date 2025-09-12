@@ -1,10 +1,13 @@
-package com.example.studybuddy;
+package com.example.studybuddy.ui.messaging;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.studybuddy.ui.courses.ActionSelection;
+import com.example.studybuddy.R;
 
 public class MessagesPage extends AppCompatActivity {
 

@@ -1,12 +1,18 @@
-package com.example.studybuddy;
+package com.example.studybuddy.ui.courses;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.studybuddy.R;
+import com.example.studybuddy.db.DatabaseHelper;
+import com.example.studybuddy.models.CourseModel;
+import com.example.studybuddy.ui.messaging.MessagesPage;
+import com.example.studybuddy.ui.profile.ProfilePage;
+
 import java.util.ArrayList;
 
 public class SearchForClasses extends AppCompatActivity {

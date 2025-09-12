@@ -1,7 +1,6 @@
-package com.example.studybuddy;
+package com.example.studybuddy.ui.courses;
 
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,10 @@ import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.studybuddy.R;
+import com.example.studybuddy.db.DatabaseHelper;
+import com.example.studybuddy.models.CourseModel;
 
 import java.util.ArrayList;
 

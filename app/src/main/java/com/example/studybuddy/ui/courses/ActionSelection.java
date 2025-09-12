@@ -1,10 +1,15 @@
-package com.example.studybuddy;
+package com.example.studybuddy.ui.courses;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.studybuddy.R;
+import com.example.studybuddy.ui.maps.MapsActivity;
+import com.example.studybuddy.ui.messaging.MessagesPage;
+import com.example.studybuddy.ui.profile.ProfilePage;
 
 import java.util.ArrayList;
 

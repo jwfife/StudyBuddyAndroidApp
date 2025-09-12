@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:background="@drawable/sign_in_gradient"
-    tools:context=".SignIn">
+    tools:context=".ui.auth.SignIn">
 
     <TextView
         android:id="@+id/main_title"

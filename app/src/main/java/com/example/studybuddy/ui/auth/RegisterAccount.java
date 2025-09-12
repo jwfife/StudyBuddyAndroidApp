@@ -1,4 +1,4 @@
-package com.example.studybuddy;
+package com.example.studybuddy.ui.auth;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -15,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+
+import com.example.studybuddy.db.DatabaseHelper;
+import com.example.studybuddy.R;
 
 public class RegisterAccount extends AppCompatActivity {
 
