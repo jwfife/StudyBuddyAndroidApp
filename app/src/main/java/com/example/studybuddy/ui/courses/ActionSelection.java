@@ -15,9 +15,7 @@ import java.util.ArrayList;
 
 public class ActionSelection extends AppCompatActivity {
 
-    String currentUserEmail = "";
-    ArrayList<String> addedCourseList = new ArrayList<>();
-    ArrayList<String> addedCoursesIDs = new ArrayList<>();
+    private String currentUserEmail = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,60 +26,23 @@ public class ActionSelection extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             currentUserEmail = extras.getString("key");
-            addedCourseList = extras.getStringArrayList("course_list");
-            addedCoursesIDs = extras.getStringArrayList("courseID_list");
         }
 
-        View searchForClasses = findViewById(R.id.searchForClasses);
-        Bundle extrasToNextPage = new Bundle();
-        extrasToNextPage.putString("key", currentUserEmail);
-        extrasToNextPage.putStringArrayList("course_list", addedCourseList);
-        searchForClasses.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = new Intent(ActionSelection.this, SearchForClasses.class);
-                        i.putExtras(extrasToNextPage);
-                        startActivity(i);
-                    }
-                }
-        );
+        setupButtonListeners();
+    }
 
-        View viewProfile = findViewById(R.id.viewProfileButton);
-        viewProfile.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = new Intent(ActionSelection.this, ProfilePage.class);
-                        //passes the user's email through the intent to the next activity
-                        i.putExtras(extrasToNextPage);
-                        startActivity(i);
-                    }
-                }
-        );
+    private void setupButtonListeners() {
+        setupNavigation(R.id.searchForClasses, SearchForClasses.class);
+        setupNavigation(R.id.viewProfileButton, ProfilePage.class);
+        setupNavigation(R.id.messagesPage, MessagesPage.class);
+        setupNavigation(R.id.groupMap, MapsActivity.class);
+    }
 
-        View viewMessages = findViewById(R.id.messagesPage);
-        viewMessages.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = new Intent(ActionSelection.this, MessagesPage.class);
-                        i.putExtra("key", currentUserEmail);
-                        startActivity(i);
-                    }
-                }
-        );
-
-        View viewMapPage = findViewById(R.id.groupMap);
-        viewMapPage.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = new Intent(ActionSelection.this, MapsActivity.class);
-                        i.putExtra("key", currentUserEmail);
-                        startActivity(i);
-                    }
-                }
-        );
+    private void setupNavigation(int viewID, Class<?> targetActivity) {
+        findViewById(viewID).setOnClickListener(v -> {
+            Intent i = new Intent(ActionSelection.this, targetActivity);
+            i.putExtra("key", currentUserEmail);
+            startActivity(i);
+        });
     }
 }
