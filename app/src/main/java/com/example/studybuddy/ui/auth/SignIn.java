@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.text.method.SingleLineTransformationMethod;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.studybuddy.ui.courses.ActionSelection;
 import com.example.studybuddy.db.DatabaseHelper;
 import com.example.studybuddy.R;
+import com.example.studybuddy.util.AuthValidator;
 
 
 /* TODO:
@@ -23,10 +23,11 @@ import com.example.studybuddy.R;
  */
 public class SignIn extends AppCompatActivity {
 
-    EditText emailField, passwordField;
-    Button loginButton;
-    private DatabaseHelper DB;
-    ImageView viewPasswordEye;
+    private EditText emailField, passwordField;
+    private Button loginButton;
+    private ImageView viewPasswordEye;
+    private AuthRepository authRepository;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,73 +37,53 @@ public class SignIn extends AppCompatActivity {
         emailField = findViewById(R.id.editEmailAddress);
         passwordField = findViewById(R.id.editPassword);
         loginButton = findViewById(R.id.sign_in);
-        DB = DatabaseHelper.getInstance(this);
+
         viewPasswordEye = findViewById(R.id.view_password_eye);
 
-        viewPasswordEye.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setViewingEye();
+        DatabaseHelper db = DatabaseHelper.getInstance(this);
+        authRepository = new DatabaseAuthRepository(db);
+
+        setupButtonListeners();
+    }
+
+    private void setupButtonListeners() {
+        viewPasswordEye.setOnClickListener(v -> togglePasswordVisibility());
+
+        loginButton.setOnClickListener(v -> {
+            String email = emailField.getText().toString();
+            String password = passwordField.getText().toString();
+
+            if (AuthValidator.isEmpty(email, password)) {
+                Toast.makeText(SignIn.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
+            } else {
+                handleLogin(email, password);
             }
         });
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String userEmail = emailField.getText().toString();
-                String userPassword = passwordField.getText().toString();
-
-                if(!isUserPasswordEmpty(userEmail, userPassword)) {
-                    verifyLoginCredentials(userEmail, userPassword);
-                }
-            }
+        findViewById(R.id.sign_up_register).setOnClickListener(v -> {
+            startActivity(new Intent(this, RegisterAccount.class));
         });
-
-        View signUp = findViewById(R.id.sign_up_register);
-        signUp.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = new Intent(SignIn.this, RegisterAccount.class);
-                        startActivity(i);
-                    }
-                }
-        );
-
-
-
-    }
-    public void setViewingEye() {
-        if (passwordField.getTransformationMethod().getClass().getSimpleName() .equals("PasswordTransformationMethod")) {
-            passwordField.setTransformationMethod(new SingleLineTransformationMethod());
-        }
-        else {
-            passwordField.setTransformationMethod(new PasswordTransformationMethod());
-        }
-
-        passwordField.setSelection(passwordField.getText().length());
     }
 
-    public Boolean isUserPasswordEmpty(String userEmail, String userPassword) {
-        if (userEmail.isEmpty() || userPassword.isEmpty()) {
-            Toast.makeText(SignIn.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        return false;
-    }
-
-    public void verifyLoginCredentials(String userEmail, String userPassword) {
-        Boolean checkEmailAndPassword = DB.checkEmailPassword(userEmail, userPassword);
-        if (checkEmailAndPassword) {
+    private void handleLogin(String email, String password) {
+        if (authRepository.authenticate(email, password)) {
             Toast.makeText(SignIn.this, "Sign in successful", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getApplicationContext(), ActionSelection.class);
 
             //passes the user's emailField through the intent to the next activity
-            intent.putExtra("key", userEmail);
+            intent.putExtra("key", email);
             startActivity(intent);
-        }
-        else {
+        } else {
             Toast.makeText(SignIn.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void togglePasswordVisibility() {
+        if (passwordField.getTransformationMethod() instanceof PasswordTransformationMethod) {
+            passwordField.setTransformationMethod(new SingleLineTransformationMethod());
+        } else {
+            passwordField.setTransformationMethod(new PasswordTransformationMethod());
+        }
+        passwordField.setSelection(passwordField.getText().length());
     }
 }
