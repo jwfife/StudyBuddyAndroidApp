@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.studybuddy.db.auth.AuthRepository;
+import com.example.studybuddy.db.auth.DatabaseAuthRepository;
 import com.example.studybuddy.ui.courses.ActionSelection;
 import com.example.studybuddy.db.DatabaseHelper;
 import com.example.studybuddy.R;

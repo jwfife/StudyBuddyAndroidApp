@@ -8,10 +8,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.studybuddy.R;
-import com.example.studybuddy.db.UserRepository;
-import com.example.studybuddy.db.CourseRepository;
-import com.example.studybuddy.db.DatabaseCourseRepository;
-import com.example.studybuddy.db.DatabaseUserRepository;
+import com.example.studybuddy.db.user.UserRepository;
+import com.example.studybuddy.db.course.CourseRepository;
+import com.example.studybuddy.db.course.DatabaseCourseRepository;
+import com.example.studybuddy.db.user.DatabaseUserRepository;
 import com.example.studybuddy.db.DatabaseHelper;
 import com.example.studybuddy.ui.courses.ActionSelection;
 import com.example.studybuddy.ui.messaging.MessagesPage;

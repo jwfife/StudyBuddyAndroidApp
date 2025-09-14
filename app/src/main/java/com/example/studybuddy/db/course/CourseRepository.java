@@ -1,4 +1,4 @@
-package com.example.studybuddy.db;
+package com.example.studybuddy.db.course;
 
 import com.example.studybuddy.models.CourseModel;
 

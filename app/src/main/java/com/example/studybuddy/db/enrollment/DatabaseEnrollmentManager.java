@@ -1,6 +1,8 @@
-package com.example.studybuddy.db;
+package com.example.studybuddy.db.enrollment;
 
-public class DatabaseEnrollmentManager implements EnrollmentManager{
+import com.example.studybuddy.db.DatabaseHelper;
+
+public class DatabaseEnrollmentManager implements EnrollmentManager {
 
     private final DatabaseHelper db;
 
