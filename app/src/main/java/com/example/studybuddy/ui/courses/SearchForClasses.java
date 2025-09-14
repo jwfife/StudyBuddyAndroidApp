@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.studybuddy.R;
-import com.example.studybuddy.db.CourseRepository;
-import com.example.studybuddy.db.DatabaseCourseRepository;
-import com.example.studybuddy.db.DatabaseEnrollmentManager;
+import com.example.studybuddy.db.course.CourseRepository;
+import com.example.studybuddy.db.course.DatabaseCourseRepository;
+import com.example.studybuddy.db.enrollment.DatabaseEnrollmentManager;
 import com.example.studybuddy.db.DatabaseHelper;
-import com.example.studybuddy.db.EnrollmentManager;
+import com.example.studybuddy.db.enrollment.EnrollmentManager;
 import com.example.studybuddy.models.CourseModel;
 import com.example.studybuddy.ui.messaging.MessagesPage;
 import com.example.studybuddy.ui.profile.ProfilePage;

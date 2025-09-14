@@ -151,7 +151,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper{
         MyDB.execSQL("drop Table if exists enrolled");
     }
 
-    public Boolean insertData(String email, String password, String firstname, String lastname){
+    public Boolean insertUserData(String email, String password, String firstname, String lastname){
         SQLiteDatabase MyDB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("email", email);
@@ -206,6 +206,5 @@ public class DatabaseHelper extends  SQLiteOpenHelper{
 
         long result = MyDB.insert("users", null, contentValues);
     }
-
 }
 

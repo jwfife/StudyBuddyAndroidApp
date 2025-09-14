@@ -1,13 +1,14 @@
-package com.example.studybuddy.db;
+package com.example.studybuddy.db.course;
 
 import android.content.Context;
 
 import com.example.studybuddy.R;
+import com.example.studybuddy.db.DatabaseHelper;
+import com.example.studybuddy.db.course.CourseRepository;
 import com.example.studybuddy.models.CourseModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReferenceArray;
 
 public class DatabaseCourseRepository implements CourseRepository {
     private final DatabaseHelper db;

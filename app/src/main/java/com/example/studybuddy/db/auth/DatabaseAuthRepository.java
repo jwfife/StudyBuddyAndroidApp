@@ -1,8 +1,8 @@
-package com.example.studybuddy.ui.auth;
+package com.example.studybuddy.db.auth;
 
 import com.example.studybuddy.db.DatabaseHelper;
 
-public class DatabaseAuthRepository implements AuthRepository{
+public class DatabaseAuthRepository implements AuthRepository {
     private final DatabaseHelper db;
 
     public DatabaseAuthRepository(DatabaseHelper db) {
