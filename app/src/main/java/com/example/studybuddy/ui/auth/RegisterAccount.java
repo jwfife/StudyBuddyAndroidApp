@@ -57,7 +57,7 @@ public class RegisterAccount extends AppCompatActivity {
         passwordValidator = new PasswordValidator();
 
         viewPasswordEye.setOnClickListener(v -> togglePasswordVisibility());
-
+        //setting register to enabled true might go here?
         register.setOnClickListener(view -> {
             handleRegisterClick();
         });
@@ -79,6 +79,7 @@ public class RegisterAccount extends AppCompatActivity {
         checkbox3 = findViewById(R.id.card3);
         checkbox4 = findViewById(R.id.card4);
         register.setBackgroundColor(Color.parseColor(getString(R.color.myGrey)));
+        register.setEnabled(false);
     }
 
     private void handleRegisterClick() {
@@ -98,7 +99,6 @@ public class RegisterAccount extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
             return;
         }
-
         boolean inserted = userRepository.insertUser(email, password, firstName, lastName);
         if (inserted) {
             Toast.makeText(this, "Registration complete!",
@@ -131,9 +131,11 @@ public class RegisterAccount extends AppCompatActivity {
 
     private void togglePasswordVisibility() {
         if (passwordField.getTransformationMethod().getClass().getSimpleName() .equals("PasswordTransformationMethod")) {
+            //reveals password
             passwordField.setTransformationMethod(new SingleLineTransformationMethod());
         }
         else {
+            //hides password
             passwordField.setTransformationMethod(new PasswordTransformationMethod());
         }
         passwordField.setSelection(passwordField.getText().length());
@@ -170,6 +172,7 @@ public class RegisterAccount extends AppCompatActivity {
         setCheckboxColor(checkbox4, passwordValidator.hasSpecialSymbol((password)));
 
         boolean allValid = passwordValidator.isValid(password);
+        register.setEnabled(true);
         register.setBackgroundColor(allValid ? Color.parseColor(getString(R.color.myBlue)) :
                 Color.parseColor(getString(R.color.myGrey)));
     }
