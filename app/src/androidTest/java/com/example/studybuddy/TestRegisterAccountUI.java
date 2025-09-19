@@ -38,7 +38,7 @@ import com.example.studybuddy.ui.auth.RegisterAccount;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
-public class ExampleInstrumentedTest {
+public class TestRegisterAccountUI {
 
     @Rule
     public ActivityScenarioRule<RegisterAccount> activityRule =
