@@ -71,6 +71,12 @@ public class TestDatabaseHelper {
     }
 
     @Test
+    public void testGetEmptyEnrolledCourse() {
+        List<String> enrolledCourses = DB.getEnrolledCourse("joe@example.com");
+        assertTrue(enrolledCourses.isEmpty());
+    }
+
+    @Test
     public void testGetSingleEnrolledCourse() {
         List<String> singleEnrolledCourse = new ArrayList<>();
         singleEnrolledCourse.add("CS-101");
