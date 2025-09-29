@@ -71,6 +71,13 @@ public class TestDatabaseHelper {
     }
 
     @Test
+    public void testGetSingleEnrolledCourse() {
+        List<String> singleEnrolledCourse = new ArrayList<>();
+        singleEnrolledCourse.add("CS-101");
+        assertEquals(singleEnrolledCourse, DB.getEnrolledCourse("john@example.com"));
+    }
+
+    @Test
     public void testGetMultipleEnrolledCourses() {
         List<String> coursesToEnroll = new ArrayList<>();
         coursesToEnroll.add("CS-335");
@@ -83,6 +90,6 @@ public class TestDatabaseHelper {
 
         List<String> enrolledCourses = DB.getEnrolledCourse("mary@example.com");
 
-        assertEquals(enrolledCourses, coursesToEnroll);
+        assertEquals(coursesToEnroll, enrolledCourses);
     }
 }
