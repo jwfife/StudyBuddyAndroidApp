@@ -34,7 +34,7 @@ public class TestDatabaseHelper {
     }
 
     @Test
-    public void testInsertEnrollment() throws SQLException {
+    public void testInsertRegistration() throws SQLException {
         boolean inserted = DB.insertUserData(
                 "john@example.com",
                 "Password123",
@@ -47,5 +47,14 @@ public class TestDatabaseHelper {
         assertTrue(DB.checkEmailPassword("john@example.com", "Password123"));
         assertEquals("John", DB.getFirstName("john@example.com"));
         assertEquals("Doe", DB.getLastName("john@example.com"));
+    }
+
+    @Test
+    public void testInsertEnrollment() {
+        String email = "john@example.com";
+        String courseID = "CS101";
+
+        DB.insertEnrollment(email, courseID);
+        assertTrue(DB.checkEnrollment(email, courseID));
     }
 }
