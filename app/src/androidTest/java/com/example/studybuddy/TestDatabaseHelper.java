@@ -14,6 +14,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestDatabaseHelper {
 
@@ -31,8 +33,7 @@ public class TestDatabaseHelper {
     @Before
     public void setUpEnrollment(){
         String email = "john@example.com";
-        String courseID = "CS101";
-
+        String courseID = "CS-101";
         DB.insertEnrollment(email, courseID);
     }
 
@@ -60,12 +61,28 @@ public class TestDatabaseHelper {
     @Test
     public void testInsertEnrollment() {
         //insertion already done in @Before method setUpEnrollment
-        assertTrue(DB.checkEnrollment("john@example.com", "CS101"));
+        assertTrue(DB.checkEnrollment("john@example.com", "CS-101"));
     }
 
     @Test
     public void testRemoveEnrollment() {
-        DB.removeEnrollment("john@example.com", "CS101");
-        assertFalse(DB.checkEnrollment("john@example.com", "CS101"));
+        DB.removeEnrollment("john@example.com", "CS-101");
+        assertFalse(DB.checkEnrollment("john@example.com", "CS-101"));
+    }
+
+    @Test
+    public void testGetMultipleEnrolledCourses() {
+        List<String> coursesToEnroll = new ArrayList<>();
+        coursesToEnroll.add("CS-335");
+        coursesToEnroll.add("CS-297");
+        coursesToEnroll.add("CS-131");
+
+        for (String course : coursesToEnroll) {
+            DB.insertEnrollment("mary@example.com", course);
+        }
+
+        List<String> enrolledCourses = DB.getEnrolledCourse("mary@example.com");
+
+        assertEquals(enrolledCourses, coursesToEnroll);
     }
 }
