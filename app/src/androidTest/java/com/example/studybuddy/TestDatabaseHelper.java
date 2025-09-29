@@ -28,6 +28,14 @@ public class TestDatabaseHelper {
         DB.onCreate(DB.getWritableDatabase());
     }
 
+    @Before
+    public void setUpEnrollment(){
+        String email = "john@example.com";
+        String courseID = "CS101";
+
+        DB.insertEnrollment(email, courseID);
+    }
+
     @After
     public void tearDown() {
         DB.close();
@@ -51,10 +59,13 @@ public class TestDatabaseHelper {
 
     @Test
     public void testInsertEnrollment() {
-        String email = "john@example.com";
-        String courseID = "CS101";
+        //insertion already done in @Before method setUpEnrollment
+        assertTrue(DB.checkEnrollment("john@example.com", "CS101"));
+    }
 
-        DB.insertEnrollment(email, courseID);
-        assertTrue(DB.checkEnrollment(email, courseID));
+    @Test
+    public void testRemoveEnrollment() {
+        DB.removeEnrollment("john@example.com", "CS101");
+        assertFalse(DB.checkEnrollment("john@example.com", "CS101"));
     }
 }
