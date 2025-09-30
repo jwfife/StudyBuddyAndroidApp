@@ -36,12 +36,14 @@ public class TestDatabaseHelper {
         setUpEnrollment();
     }
 
+    //happens in setup
     public void setUpCoursesInDatabase() {
         List<CourseModel> courseModels = new ArrayList<>();
         courseModels.add(new CourseModel("Basics of Computer Science", "CS-101"));
         DB.insertCourses(courseModels);
     }
 
+    //happens in setup
     public void setUpEnrollment(){
         String email = "john@example.com";
         String courseID = "CS-101";
@@ -114,5 +116,14 @@ public class TestDatabaseHelper {
     public void testGetCourseTitle() {
         String courseTitle = DB.getCourseTitle("CS-101");
         assertEquals("Basics of Computer Science", courseTitle);
+    }
+
+    @Test
+    public void testCheckCourseID() {
+        String existingCourseID = "CS-101";
+        String nonExistentCourseID = "CS-242";
+
+        assertTrue(DB.checkCourseID(existingCourseID));
+        assertFalse(DB.checkCourseID(nonExistentCourseID));
     }
 }
