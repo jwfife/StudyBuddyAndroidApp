@@ -7,9 +7,12 @@ import android.database.sqlite.SQLiteDatabase;
 import androidx.test.core.app.ApplicationProvider;
 
 import com.example.studybuddy.db.DatabaseHelper;
+import com.example.studybuddy.models.CourseModel;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -28,9 +31,17 @@ public class TestDatabaseHelper {
 
         DB.onUpgrade(DB.getWritableDatabase(), 1, 1);
         DB.onCreate(DB.getWritableDatabase());
+
+        setUpCoursesInDatabase();
+        setUpEnrollment();
     }
 
-    @Before
+    public void setUpCoursesInDatabase() {
+        List<CourseModel> courseModels = new ArrayList<>();
+        courseModels.add(new CourseModel("Basics of Computer Science", "CS-101"));
+        DB.insertCourses(courseModels);
+    }
+
     public void setUpEnrollment(){
         String email = "john@example.com";
         String courseID = "CS-101";
@@ -97,5 +108,11 @@ public class TestDatabaseHelper {
         List<String> enrolledCourses = DB.getEnrolledCourse("mary@example.com");
 
         assertEquals(coursesToEnroll, enrolledCourses);
+    }
+
+    @Test
+    public void testGetCourseTitle() {
+        String courseTitle = DB.getCourseTitle("CS-101");
+        assertEquals("Basics of Computer Science", courseTitle);
     }
 }
